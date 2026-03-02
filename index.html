@@ -10,450 +10,492 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
 <style>
-  :root{
-    --bg:#05080f;--surface:#0c1222;--border:rgba(255,255,255,.07);
-    --accent:#5b8dee;--accent2:#a78bfa;--accent3:#34d399;
-    --text:#e2e8f0;--muted:#8892a4;--card:#101829;
-    --radius:16px;--glow:0 0 40px rgba(91,141,238,.15);
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
 
-  /* ── NAV ── */
-  nav{
-    position:fixed;top:0;left:0;width:100%;z-index:200;
-    padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
-    background:rgba(5,8,15,.92);backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--border);transition:padding .3s;
-  }
-  .nav-logo{display:flex;align-items:center;gap:10px;z-index:201}
-  .nav-logo img{height:36px;width:36px;border-radius:8px;object-fit:cover;flex-shrink:0}
-  .nav-logo-fallback{
-    display:none;width:36px;height:36px;border-radius:10px;
-    background:linear-gradient(135deg,#5b8dee,#a78bfa);
-    align-items:center;justify-content:center;
-    font-weight:800;color:#fff;font-size:.9rem;flex-shrink:0;
-  }
-  .nav-logo span.name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem}
-  .nav-links{display:flex;gap:28px;font-size:.9rem;color:var(--muted);align-items:center}
-  .nav-links a{transition:color .2s;padding:4px 0}
-  .nav-links a:hover{color:#fff}
-  .nav-cta{
-    background:var(--accent);color:#fff;padding:8px 18px;
-    border-radius:8px;font-size:.85rem;font-weight:600;
-    transition:opacity .2s,transform .2s;white-space:nowrap;
-  }
-  .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
-  .nav-toggle{
-    display:none;background:none;border:none;color:#fff;
-    cursor:pointer;font-size:1.5rem;line-height:1;
-    padding:4px;z-index:201;
-  }
-  /* Mobile CTA hidden by default — only shown inside open mobile menu */
-  .nav-cta-mobile{display:none}
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root{
+  --bg:#05080f; --surface:#0c1222; --card:#101829;
+  --border:rgba(255,255,255,.07);
+  --accent:#5b8dee; --accent2:#a78bfa; --accent3:#34d399;
+  --text:#e2e8f0; --muted:#8892a4;
+  --radius:16px;
+  --glow:0 0 40px rgba(91,141,238,.18);
+  /* safe area helpers */
+  --sat:env(safe-area-inset-top,0px);
+  --sar:env(safe-area-inset-right,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px);
+}
 
-  /* ── HERO ── */
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',sans-serif;line-height:1.6;
+  overflow-x:hidden;
+  /* NOTE: safe-area insets are handled per-component, not on body,
+     so they don't cascade and break grid/flex layouts */
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;
+  background:rgba(5,8,15,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:padding .3s;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;z-index:201;flex-shrink:0}
+.nav-logo img{height:36px;width:36px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.nav-logo-fallback{
+  display:none;width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#5b8dee,#a78bfa);
+  align-items:center;justify-content:center;
+  font-weight:800;color:#fff;font-size:.9rem;flex-shrink:0;
+}
+.nav-logo .name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem}
+/* Desktop links */
+.nav-links{display:flex;gap:24px;font-size:.9rem;color:var(--muted);align-items:center}
+.nav-links a{transition:color .2s;padding:4px 2px;white-space:nowrap}
+.nav-links a:hover{color:#fff}
+/* Desktop CTA button */
+#desktopCta{
+  background:var(--accent);color:#fff;padding:8px 18px;
+  border-radius:8px;font-size:.85rem;font-weight:600;
+  transition:opacity .2s,transform .2s;white-space:nowrap;flex-shrink:0;
+}
+#desktopCta:hover{opacity:.85;transform:translateY(-1px)}
+/* Hamburger — hidden on desktop */
+.nav-toggle{
+  display:none;background:none;border:none;color:#fff;
+  cursor:pointer;font-size:1.6rem;line-height:1;
+  padding:8px;z-index:201;
+  /* big enough tap target */
+  min-width:44px;min-height:44px;
+  align-items:center;justify-content:center;
+}
+/* Mobile-only CTA in menu — hidden by default */
+.nav-cta-mobile{display:none !important}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:130px 32px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;will-change:transform}
+.blob1{width:600px;height:600px;background:var(--accent);top:-180px;left:-160px}
+.blob2{width:500px;height:500px;background:var(--accent2);bottom:-120px;right:-120px}
+.blob3{width:300px;height:300px;background:var(--accent3);bottom:100px;left:32%}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(91,141,238,.12);border:1px solid rgba(91,141,238,.3);
+  border-radius:100px;padding:6px 16px;font-size:.8rem;color:var(--accent);margin-bottom:28px;
+}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2rem,6vw,4.6rem);font-weight:700;line-height:1.1;
+  max-width:820px;
+  background:linear-gradient(135deg,#fff 30%,var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero p{margin:20px auto 36px;max-width:560px;color:var(--muted);font-size:1.05rem}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+  padding:14px 28px;border-radius:10px;font-weight:600;
+  transition:transform .2s,box-shadow .2s;white-space:nowrap;display:inline-flex;align-items:center;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(91,141,238,.4)}
+.btn-ghost{
+  border:1px solid var(--border);color:var(--text);
+  padding:14px 28px;border-radius:10px;font-weight:500;
+  transition:border-color .2s,background .2s;white-space:nowrap;display:inline-flex;align-items:center;
+}
+.btn-ghost:hover{border-color:var(--accent);background:rgba(91,141,238,.06)}
+.hero-scroll{margin-top:60px;color:var(--muted);font-size:.8rem;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:linepulse 2s infinite}
+@keyframes linepulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ═══════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════ */
+section{padding:100px 24px}
+.container{max-width:1140px;margin:0 auto}
+.section-label{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:16px}
+.section-sub{color:var(--muted);max-width:560px;margin-bottom:52px}
+
+/* ═══════════════════════════════════════════
+   FILTER TABS
+═══════════════════════════════════════════ */
+.cats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.cat-btn{
+  padding:8px 18px;border-radius:100px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:.85rem;cursor:pointer;
+  transition:all .2s;font-family:'Inter',sans-serif;
+  position:relative;z-index:1;
+  min-height:38px;
+}
+.cat-btn.active,.cat-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ═══════════════════════════════════════════
+   APPS GRID & CARDS
+═══════════════════════════════════════════ */
+.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.app-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  position:relative;display:flex;flex-direction:column;
+}
+.app-card::before{
+  content:'';position:absolute;inset:0;border-radius:var(--radius);
+  background:linear-gradient(135deg,rgba(91,141,238,.05),transparent);
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:0;
+}
+.app-card:hover{transform:translateY(-4px);border-color:rgba(91,141,238,.35);box-shadow:var(--glow)}
+.app-card:hover::before{opacity:1}
+.app-icon-wrap,
+.app-tag,
+.app-card h3,
+.app-card p,
+.app-link{position:relative;z-index:1}
+.app-card p{flex:1}
+.app-icon-wrap{
+  width:72px;height:72px;border-radius:18px;margin-bottom:16px;
+  overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+}
+.app-icon-wrap img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+.app-icon-placeholder{font-size:1.8rem;line-height:1}
+.app-tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.app-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:8px;line-height:1.3}
+.app-card p{font-size:.87rem;color:var(--muted);line-height:1.55;margin-bottom:0}
+.app-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:16px;font-size:.82rem;color:var(--accent);
+  font-weight:500;transition:gap .2s;
+  cursor:pointer;z-index:2;align-self:flex-start;padding:8px 0;
+  min-height:44px; /* Apple HIG tap target */
+}
+.app-link:hover{gap:10px;color:#fff}
+.app-card.hidden{display:none}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-visual{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:40px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:300px;gap:16px;
+}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.stat{text-align:center;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.stat-num{
+  font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:.78rem;color:var(--muted);margin-top:4px}
+
+/* ═══════════════════════════════════════════
+   BLOG
+═══════════════════════════════════════════ */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.blog-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+  transition:transform .25s,border-color .25s;display:block;
+}
+.blog-card:hover{transform:translateY(-3px);border-color:rgba(91,141,238,.3)}
+.blog-date{font-size:.78rem;color:var(--muted);margin-bottom:10px}
+.blog-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;margin-bottom:10px;line-height:1.4}
+.blog-card p{font-size:.85rem;color:var(--muted)}
+.blog-more{display:inline-flex;align-items:center;gap:6px;margin-top:36px;color:var(--accent);font-weight:500;transition:gap .2s}
+.blog-more:hover{gap:10px}
+#blog-loading{color:var(--muted);font-size:.9rem;padding:20px 0}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+.contact-wrap{max-width:600px;margin:0 auto;text-align:center}
+.contact-form{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:40px;text-align:left;margin-top:40px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.form-group label{font-size:.85rem;font-weight:500;color:var(--muted)}
+.form-group input,.form-group textarea{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;color:var(--text);
+  font-family:'Inter',sans-serif;font-size:16px; /* 16px prevents iOS zoom */
+  transition:border-color .2s;outline:none;width:100%;
+  -webkit-appearance:none; /* normalize iOS inputs */
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-submit{
+  width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:10px;padding:14px;
+  font-size:1rem;font-weight:600;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:opacity .2s,transform .2s;
+  min-height:52px; /* good tap target */
+}
+.form-submit:hover{opacity:.88;transform:translateY(-1px)}
+.form-msg{
+  display:none;margin-top:14px;padding:12px 16px;border-radius:10px;
+  font-size:.9rem;text-align:center;
+}
+.form-msg.success{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+.form-msg.error{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.25)}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 24px;
+  padding-bottom:max(40px,calc(env(safe-area-inset-bottom) + 24px));
+  text-align:center;color:var(--muted);font-size:.85rem;
+}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:1140px;margin:0 auto}
+.footer-logo-img{height:36px;width:auto;border-radius:6px;opacity:.85}
+.footer-tagline{font-size:.85rem}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.footer-links a{transition:color .2s;padding:4px 0}
+.footer-links a:hover{color:#fff}
+.footer-copy{font-size:.78rem;margin-top:4px}
+
+/* ═══════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════ */
+.spinner{
+  width:18px;height:18px;border:2px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;
+  animation:spin .8s linear infinite;
+  display:inline-block;vertical-align:middle;margin-right:8px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#apps-loading{color:var(--muted);font-size:.9rem;padding:20px 0}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   Devices & breakpoints:
+   ≥1024px  → Desktop
+   768–1023 → Tablet / iPad portrait
+   430–767  → iPhone Plus/Max portrait, large phones
+   390–429  → iPhone 14/15 standard portrait
+   ≤389     → iPhone SE, mini
+   landscape→ any phone rotated
+═══════════════════════════════════════════════════════ */
+
+/* ── TABLET ─────────────────────────────────────────── */
+@media (max-width:1023px){
+  section{padding:80px 28px}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .about-visual{min-height:auto}
+  .apps-grid{grid-template-columns:repeat(2,1fr)}
+  .blog-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ── ALL PHONES portrait (≤767px) ───────────────────── */
+@media (max-width:767px){
+
+  /* NAV */
+  .nav-links,
+  #desktopCta     { display:none }
+  .nav-toggle     { display:flex }
+  nav             { padding:12px 20px }
+
+  /* mobile full-screen menu */
+  nav.open .nav-links{
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    inset:0;          /* top/right/bottom/left all 0 */
+    width:100%;
+    height:100%;
+    height:100svh;
+    background:rgba(5,8,15,.97);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    padding:88px 28px 40px;
+    padding-top:max(88px, calc(env(safe-area-inset-top) + 72px));
+    padding-bottom:max(40px, calc(env(safe-area-inset-bottom) + 24px));
+    gap:0;
+    z-index:199;
+    overflow-y:auto;
+  }
+  nav.open .nav-links a{
+    display:flex;
+    align-items:center;
+    height:58px;
+    color:var(--text);
+    font-size:1.2rem;
+    font-weight:500;
+    border-bottom:1px solid var(--border);
+    transition:color .15s;
+  }
+  nav.open .nav-links a:last-of-type{ border-bottom:none }
+  nav.open .nav-links a:active{ color:var(--accent) }
+  nav.open .nav-links .nav-cta-mobile{
+    display:flex !important;
+    justify-content:center;
+    margin-top:24px;
+    height:54px;
+    border:none !important;
+    border-bottom:none !important;
+    background:var(--accent);
+    color:#fff;
+    border-radius:12px;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:.01em;
+  }
+
+  /* HERO */
   .hero{
-    min-height:100vh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    text-align:center;padding:120px 24px 80px;
-    position:relative;overflow:hidden;
+    min-height:100svh;
+    padding:110px 22px 64px;
+    padding-top:max(110px, calc(env(safe-area-inset-top) + 90px));
   }
-  .hero-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none}
-  .blob1{width:600px;height:600px;background:var(--accent);top:-180px;left:-160px}
-  .blob2{width:500px;height:500px;background:var(--accent2);bottom:-120px;right:-120px}
-  .blob3{width:300px;height:300px;background:var(--accent3);bottom:100px;left:32%}
-  .hero-badge{
-    display:inline-flex;align-items:center;gap:6px;
-    background:rgba(91,141,238,.12);border:1px solid rgba(91,141,238,.3);
-    border-radius:100px;padding:6px 16px;font-size:.8rem;color:var(--accent);margin-bottom:28px;
-  }
-  .hero h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:clamp(2.2rem,6vw,4.6rem);font-weight:700;line-height:1.1;
-    max-width:820px;
-    background:linear-gradient(135deg,#fff 30%,var(--accent2));
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  }
-  .hero p{margin:20px auto 36px;max-width:560px;color:var(--muted);font-size:1.05rem}
-  .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-  .btn-primary{
-    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
-    padding:14px 28px;border-radius:10px;font-weight:600;
-    transition:transform .2s,box-shadow .2s;white-space:nowrap;
-  }
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(91,141,238,.4)}
-  .btn-ghost{
-    border:1px solid var(--border);color:var(--text);
-    padding:14px 28px;border-radius:10px;font-weight:500;
-    transition:border-color .2s,background .2s;white-space:nowrap;
-  }
-  .btn-ghost:hover{border-color:var(--accent);background:rgba(91,141,238,.06)}
-  .hero-scroll{margin-top:60px;color:var(--muted);font-size:.8rem;display:flex;flex-direction:column;align-items:center;gap:8px}
-  .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:linepulse 2s infinite}
-  @keyframes linepulse{0%,100%{opacity:.3}50%{opacity:1}}
+  .hero h1        { font-size:clamp(2rem,8.5vw,3rem) }
+  .hero p         { font-size:.95rem; padding:0 4px }
+  .hero-btns      { flex-direction:column; align-items:center; gap:12px; width:100% }
+  .btn-primary,
+  .btn-ghost      { width:100%; max-width:320px; justify-content:center; padding:15px 20px; font-size:1rem }
+  .hero-scroll    { margin-top:36px }
+  .blob1          { width:240px;height:240px;top:-60px;left:-60px }
+  .blob2          { width:200px;height:200px;bottom:-50px;right:-50px }
+  .blob3          { width:110px;height:110px }
 
-  /* ── SECTIONS ── */
-  section{padding:100px 24px}
-  .container{max-width:1140px;margin:0 auto}
-  .section-label{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-  .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:16px}
-  .section-sub{color:var(--muted);max-width:560px;margin-bottom:52px}
+  /* SECTIONS */
+  section         { padding:60px 20px }
+  .section-sub    { margin-bottom:32px }
 
-  /* ── FILTER TABS ── */
+  /* FILTER TABS — horizontal scroll, bleeds to screen edges */
   .cats{
-    display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    touch-action:pan-x;
+    margin:0 -20px 28px;
+    padding:0 20px 10px;
+    gap:8px;
+    scrollbar-width:none;
   }
+  .cats::-webkit-scrollbar{ display:none }
   .cat-btn{
-    padding:8px 18px;border-radius:100px;
-    border:1px solid var(--border);background:transparent;
-    color:var(--muted);font-size:.85rem;cursor:pointer;
-    transition:all .2s;font-family:'Inter',sans-serif;
-    /* FIX: ensure buttons are above card overlay */
-    position:relative;z-index:1;
+    flex-shrink:0;
+    white-space:nowrap;
+    min-height:44px;
+    padding:10px 18px;
+    font-size:.85rem;
   }
-  .cat-btn.active,.cat-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 
-  /* ── APPS GRID ── */
-  .apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+  /* APPS */
+  .apps-grid      { grid-template-columns:1fr; gap:14px }
+  .app-card       { padding:18px }
+  .app-link       { min-height:44px; padding:8px 0 }
 
-  /* ── APP CARD — KEY FIXES ── */
-  .app-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:var(--radius);padding:22px;
-    transition:transform .25s,border-color .25s,box-shadow .25s;
-    /* FIX 1: removed overflow:hidden so ::before doesn't clip or layer over links */
-    position:relative;
-    display:flex;flex-direction:column;
-  }
-  .app-card::before{
-    content:'';position:absolute;inset:0;border-radius:var(--radius);
-    background:linear-gradient(135deg,rgba(91,141,238,.05),transparent);
-    opacity:0;transition:opacity .3s;
-    /* FIX 2: pointer-events:none so the overlay never intercepts clicks */
-    pointer-events:none;
-    z-index:0;
-  }
-  .app-card:hover{transform:translateY(-4px);border-color:rgba(91,141,238,.35);box-shadow:var(--glow)}
-  .app-card:hover::before{opacity:1}
+  /* ABOUT */
+  .about-grid     { grid-template-columns:1fr; gap:32px }
+  .about-visual   { padding:28px 20px }
+  .stat-row       { grid-template-columns:repeat(3,1fr); gap:10px }
+  .stat           { padding:14px 8px }
+  .stat-num       { font-size:1.5rem }
+  .stat-label     { font-size:.72rem }
 
-  /* FIX 3: all card children above the ::before overlay */
-  .app-icon-wrap,
-  .app-tag,
-  .app-card h3,
-  .app-card p,
-  .app-link{position:relative;z-index:1}
+  /* BLOG */
+  .blog-grid      { grid-template-columns:1fr; gap:12px }
+  .blog-card      { padding:20px }
 
-  .app-card{flex-direction:column}
-  .app-card p{flex:1}
+  /* CONTACT */
+  .form-row       { grid-template-columns:1fr }
+  .contact-form   { padding:22px 18px }
 
-  .app-icon-wrap{
-    width:72px;height:72px;border-radius:18px;margin-bottom:16px;
-    overflow:hidden;background:linear-gradient(135deg,var(--accent),var(--accent2));
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    box-shadow:0 4px 16px rgba(0,0,0,.4);
-  }
-  .app-icon-wrap img{width:100%;height:100%;object-fit:cover;border-radius:18px}
-  .app-icon-placeholder{font-size:1.8rem;line-height:1}
-  .app-tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-  .app-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:8px;line-height:1.3}
-  .app-card p{font-size:.87rem;color:var(--muted);line-height:1.55;margin-bottom:0}
+  /* FOOTER */
+  .footer-links   { gap:10px 16px }
+  footer          { padding:32px 20px; padding-bottom:max(32px,calc(env(safe-area-inset-bottom)+20px)) }
+}
 
-  /* FIX 4: app-link — full interactive area, proper stacking */
-  .app-link{
-    display:inline-flex;align-items:center;gap:6px;
-    margin-top:16px;font-size:.82rem;color:var(--accent);
-    font-weight:500;transition:gap .2s;
-    cursor:pointer;
-    /* FIX 5: explicit z-index above overlay */
-    z-index:2;
-    align-self:flex-start;
-    /* FIX 6: large touch target for mobile */
-    padding:6px 0;
-  }
-  .app-link:hover{gap:10px;color:#fff}
-  .app-card.hidden{display:none}
+/* ── LARGE PHONES (430–767px) → 2-col grids ─────────── */
+@media (min-width:430px) and (max-width:767px){
+  .apps-grid  { grid-template-columns:repeat(2,1fr) }
+  .blog-grid  { grid-template-columns:repeat(2,1fr) }
+  .app-card   { padding:16px }
+}
 
-  /* ── ABOUT ── */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .about-visual{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:24px;padding:40px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-height:300px;gap:16px;
-  }
-  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
-  .stat{text-align:center;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:12px}
-  .stat-num{
-    font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  }
-  .stat-label{font-size:.78rem;color:var(--muted);margin-top:4px}
+/* ── SMALL PHONES (≤389px) — SE, mini ──────────────── */
+@media (max-width:389px){
+  nav             { padding:10px 16px }
+  .hero           { padding:100px 18px 56px }
+  .hero h1        { font-size:clamp(1.75rem,9.5vw,2.2rem) }
+  .hero p         { font-size:.88rem }
+  .btn-primary,
+  .btn-ghost      { padding:13px 16px; font-size:.95rem }
+  section         { padding:50px 16px }
+  .section-title  { font-size:1.5rem }
+  .stat-row       { grid-template-columns:1fr 1fr }
+  .contact-form   { padding:18px 14px }
+  .cats           { margin:0 -16px 24px; padding:0 16px 10px }
+  .apps-grid,
+  .blog-grid      { grid-template-columns:1fr }
+}
 
-  /* ── BLOG ── */
-  .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-  .blog-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:var(--radius);padding:28px;
-    transition:transform .25s,border-color .25s;display:block;
-  }
-  .blog-card:hover{transform:translateY(-3px);border-color:rgba(91,141,238,.3)}
-  .blog-date{font-size:.78rem;color:var(--muted);margin-bottom:10px}
-  .blog-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;margin-bottom:10px;line-height:1.4}
-  .blog-card p{font-size:.85rem;color:var(--muted)}
-  .blog-more{display:inline-flex;align-items:center;gap:6px;margin-top:36px;color:var(--accent);font-weight:500;transition:gap .2s}
-  .blog-more:hover{gap:10px}
-
-  /* ── CONTACT ── */
-  .contact-wrap{max-width:600px;margin:0 auto;text-align:center}
-  .contact-form{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:20px;padding:40px;text-align:left;margin-top:40px;
-  }
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-  .form-group label{font-size:.85rem;font-weight:500;color:var(--muted)}
-  .form-group input,.form-group textarea{
-    background:rgba(255,255,255,.04);border:1px solid var(--border);
-    border-radius:10px;padding:12px 16px;color:var(--text);
-    font-family:'Inter',sans-serif;font-size:.9rem;
-    transition:border-color .2s;outline:none;width:100%;
-    /* FIX 7: prevent iOS zoom on input focus */
-    font-size:16px;
-  }
-  .form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
-  .form-group textarea{resize:vertical;min-height:120px}
-  .form-submit{
-    width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:#fff;border:none;border-radius:10px;padding:14px;
-    font-size:1rem;font-weight:600;cursor:pointer;
-    font-family:'Inter',sans-serif;transition:opacity .2s,transform .2s;
-  }
-  .form-submit:hover{opacity:.88;transform:translateY(-1px)}
-  .form-msg{
-    display:none;margin-top:14px;padding:12px 16px;border-radius:10px;
-    font-size:.9rem;text-align:center;
-  }
-  .form-msg.success{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.25)}
-  .form-msg.error{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.25)}
-
-  /* ── FOOTER ── */
-  footer{border-top:1px solid var(--border);padding:40px 24px;text-align:center;color:var(--muted);font-size:.85rem}
-  .footer-inner{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:1140px;margin:0 auto}
-  .footer-logo-img{height:36px;width:auto;border-radius:6px;opacity:.85}
-  .footer-tagline{font-size:.85rem}
-  .footer-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
-  .footer-links a{transition:color .2s;padding:4px 0}
-  .footer-links a:hover{color:#fff}
-  .footer-copy{font-size:.78rem;margin-top:4px}
-
-  /* ── SPINNER ── */
-  .spinner{
-    width:18px;height:18px;border:2px solid var(--border);
-    border-top-color:var(--accent);border-radius:50%;
-    animation:spin .8s linear infinite;
-    display:inline-block;vertical-align:middle;margin-right:8px;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #apps-loading,#blog-loading{color:var(--muted);font-size:.9rem;padding:20px 0}
-
-  /* ── SCROLL FADE ── */
-  .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
-  .fade-up.visible{opacity:1;transform:translateY(0)}
-
-  /* ══════════════════════════════════════════════════════
-     SAFE AREA INSETS — iPhone notch / Dynamic Island / home bar
-  ══════════════════════════════════════════════════════ */
-  nav{
-    padding-left:max(24px, env(safe-area-inset-left));
-    padding-right:max(24px, env(safe-area-inset-right));
-    padding-top:max(12px, env(safe-area-inset-top));
-  }
-  footer{
-    padding-bottom:max(40px, calc(env(safe-area-inset-bottom) + 20px));
-    padding-left:max(24px, env(safe-area-inset-left));
-    padding-right:max(24px, env(safe-area-inset-right));
-  }
+/* ── LANDSCAPE PHONES ───────────────────────────────── */
+@media (max-height:450px) and (orientation:landscape){
   .hero{
-    /* push hero content below notch */
-    padding-top:max(120px, calc(env(safe-area-inset-top) + 100px));
-    padding-left:max(24px, env(safe-area-inset-left));
-    padding-right:max(24px, env(safe-area-inset-right));
+    min-height:auto;
+    padding:80px 24px 40px;
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
   }
-
-  /* ══════════════════════════════════════════════════════
-     TABLET — iPad, large phones landscape
-  ══════════════════════════════════════════════════════ */
-  @media(max-width:1024px){
-    .about-grid{grid-template-columns:1fr}
-    .about-visual{min-height:auto}
-    .apps-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .hero h1        { font-size:clamp(1.5rem,5vw,2.2rem) }
+  .hero p         { font-size:.9rem; margin:10px auto 18px }
+  .hero-scroll    { display:none }
+  .hero-btns      { flex-direction:row; flex-wrap:wrap; justify-content:center }
+  .btn-primary,
+  .btn-ghost      { width:auto; padding:12px 22px; font-size:.9rem }
+  section         { padding:44px 20px }
+  /* landscape menu: 2-col grid of links */
+  nav.open .nav-links{
+    flex-direction:row;
+    flex-wrap:wrap;
+    padding-top:max(72px,calc(env(safe-area-inset-top)+56px));
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+    align-content:flex-start;
+    gap:0;
   }
+  nav.open .nav-links a       { width:50%; font-size:1.05rem; height:50px }
+  nav.open .nav-links .nav-cta-mobile{ width:100%; margin-top:14px }
+}
 
-  /* ══════════════════════════════════════════════════════
-     MOBILE — iPhone Max portrait (430px) up to tablets
-     Breakpoint 768px catches all iPhones in portrait AND landscape
-     for smaller models; 932px catches iPhone Max landscape
-  ══════════════════════════════════════════════════════ */
-  @media(max-width:932px) and (pointer:coarse){
-    /* pointer:coarse = touchscreen = all iPhones & iPads */
-
-    /* ── Nav ── */
-    .nav-links,#desktopCta{display:none}
-    .nav-toggle{display:block}
-
-    nav.open .nav-links{
-      display:flex;flex-direction:column;
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      height:100dvh; /* dynamic viewport height — accounts for Safari chrome */
-      background:rgba(5,8,15,.98);
-      /* safe-area aware padding */
-      padding-top:max(90px, calc(env(safe-area-inset-top) + 70px));
-      padding-bottom:max(40px, calc(env(safe-area-inset-bottom) + 20px));
-      padding-left:max(32px, env(safe-area-inset-left));
-      padding-right:max(32px, env(safe-area-inset-right));
-      gap:0;border:none;z-index:199;
-      overflow-y:auto;
-    }
-    nav.open .nav-links a{
-      color:var(--text);font-size:1.2rem;
-      padding:18px 0;
-      border-bottom:1px solid var(--border);
-      display:block;
-      /* minimum 44px tap target (Apple HIG) */
-      min-height:44px;line-height:44px;padding-top:0;padding-bottom:0;
-      border-bottom:1px solid var(--border);
-    }
-    nav.open .nav-links a.nav-cta-mobile{
-      display:block;margin-top:24px;border:none;
-      background:var(--accent);color:#fff;
-      text-align:center;
-      padding:16px 20px;min-height:52px;line-height:1.2;
-      border-radius:12px;font-weight:600;font-size:1rem;
-    }
-
-    /* ── Hero ── */
-    .hero{padding-bottom:60px}
-    .hero h1{font-size:clamp(2rem,9vw,3.2rem)}
-    .hero p{font-size:.95rem;padding:0 4px}
-    .hero-scroll{margin-top:40px}
-    .blob1{width:280px;height:280px;top:-100px;left:-80px}
-    .blob2{width:220px;height:220px;bottom:-60px;right:-60px}
-    .blob3{width:140px;height:140px}
-
-    /* ── Hero buttons — stack on narrow screens ── */
-    .hero-btns{flex-direction:column;align-items:center;gap:12px}
-    .btn-primary,.btn-ghost{
-      width:100%;max-width:320px;
-      text-align:center;justify-content:center;
-      padding:16px 24px; /* bigger tap target */
-      font-size:1rem;
-    }
-
-    /* ── Sections ── */
-    section{padding:60px 20px}
-    section.surface{padding:60px 20px}
-    .container{padding:0}
-
-    /* ── Filter tabs — horizontal scroll ── */
-    .cats{
-      flex-wrap:nowrap;
-      overflow-x:auto;
-      overflow-y:hidden;
-      touch-action:pan-x;
-      -webkit-overflow-scrolling:touch;
-      padding-bottom:10px;
-      margin-bottom:30px;
-      gap:8px;
-      scrollbar-width:none;
-      /* extend to edges on iPhone */
-      margin-left:-20px;
-      margin-right:-20px;
-      padding-left:20px;
-      padding-right:20px;
-    }
-    .cats::-webkit-scrollbar{display:none}
-    .cat-btn{
-      white-space:nowrap;flex-shrink:0;
-      padding:10px 18px;font-size:.85rem;
-      min-height:44px; /* Apple HIG minimum tap target */
-    }
-
-    /* ── Apps grid — 1 column on phones, 2 on large phones/iPad ── */
-    .apps-grid{
-      grid-template-columns:1fr;
-      gap:16px;
-    }
-    .app-card{padding:20px}
-    .app-link{
-      padding:12px 0;font-size:.9rem;
-      min-height:44px;display:inline-flex;align-items:center;
-    }
-
-    /* ── Blog ── */
-    .blog-grid{grid-template-columns:1fr;gap:16px}
-
-    /* ── About ── */
-    .about-grid{grid-template-columns:1fr;gap:32px}
-    .stat-row{grid-template-columns:repeat(3,1fr);gap:10px}
-    .stat{padding:14px 8px}
-    .stat-num{font-size:1.6rem}
-
-    /* ── Contact form ── */
-    .form-row{grid-template-columns:1fr}
-    .contact-form{padding:24px 20px}
-    .form-group input,.form-group textarea{
-      font-size:16px; /* prevent iOS auto-zoom */
-      padding:14px 16px; /* bigger tap area */
-    }
-    .form-submit{padding:16px;font-size:1rem;min-height:52px}
-
-    /* ── Footer ── */
-    .footer-links{gap:14px 20px}
-  }
-
-  /* ══════════════════════════════════════════════════════
-     SMALL PHONES — iPhone SE, mini (< 390px)
-  ══════════════════════════════════════════════════════ */
-  @media(max-width:389px){
-    .hero h1{font-size:clamp(1.8rem,10vw,2.6rem)}
-    .stat-row{grid-template-columns:1fr 1fr}
-    .apps-grid{gap:12px}
-    .app-card{padding:16px}
-    section{padding:50px 16px}
-    .section-title{font-size:1.6rem}
-    nav{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-  }
-
-  /* ══════════════════════════════════════════════════════
-     LANDSCAPE PHONES — iPhone in landscape orientation
-  ══════════════════════════════════════════════════════ */
-  @media(max-height:500px) and (orientation:landscape) and (pointer:coarse){
-    .hero{min-height:auto;padding-top:80px;padding-bottom:40px}
-    .hero h1{font-size:clamp(1.6rem,5vw,2.2rem)}
-    .hero-scroll{display:none}
-    nav{padding-top:8px}
-    nav.open .nav-links{
-      padding-top:70px;
-      flex-direction:row;flex-wrap:wrap;
-      height:100dvh;align-content:flex-start;
-    }
-    nav.open .nav-links a{width:calc(50% - 16px);font-size:1rem}
-    nav.open .nav-links a.nav-cta-mobile{width:100%}
-  }
-
-  /* ══════════════════════════════════════════════════════
-     TWO-COLUMN APP GRID — wide enough phones / tablets
-     iPhone Max portrait (430px) → 2 columns looks great
-  ══════════════════════════════════════════════════════ */
-  @media(min-width:600px) and (max-width:932px) and (pointer:coarse){
-    .apps-grid{grid-template-columns:repeat(2,1fr)}
-    .blog-grid{grid-template-columns:repeat(2,1fr)}
-  }
 </style>
 </head>
 <body>
@@ -466,15 +508,22 @@
     <div class="nav-logo-fallback">A</div>
     <span class="name">AME Mobile</span>
   </div>
+
+  <!-- Desktop nav links (hidden on mobile via CSS) -->
   <div class="nav-links" id="navLinks">
-    <a href="#apps" onclick="closeMenu()">Apps</a>
-    <a href="#about" onclick="closeMenu()">About</a>
-    <a href="#blog" onclick="closeMenu()">Blog</a>
+    <a href="#apps"    onclick="closeMenu()">Apps</a>
+    <a href="#about"   onclick="closeMenu()">About</a>
+    <a href="#blog"    onclick="closeMenu()">Blog</a>
     <a href="#contact" onclick="closeMenu()">Contact</a>
+    <!-- shown ONLY when mobile menu is open -->
     <a href="#contact" class="nav-cta-mobile" onclick="closeMenu()">Get in Touch</a>
   </div>
-  <a href="#contact" class="nav-cta" id="desktopCta">Get in Touch</a>
-  <button class="nav-toggle" id="navToggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+
+  <!-- Desktop-only CTA (hidden on mobile) -->
+  <a href="#contact" id="desktopCta">Get in Touch</a>
+
+  <!-- Hamburger (hidden on desktop) -->
+  <button class="nav-toggle" id="navToggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
 </nav>
 
 <!-- HERO -->
@@ -536,15 +585,15 @@
           Proudly made in Canada<br>
           <span style="font-size:.85rem">Building apps that improve lives since 2010</span>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
           <a href="https://moodoodle.amemobile.ca/" target="_blank" rel="noopener"
-            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:6px 12px;border-radius:8px;transition:background .2s"
+            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:8px 14px;border-radius:8px;transition:background .2s;min-height:36px;display:inline-flex;align-items:center"
             onmouseover="this.style.background='rgba(91,141,238,.2)'" onmouseout="this.style.background='rgba(91,141,238,.1)'">MooDoodle ↗</a>
           <a href="https://haptic-mind.amemobile.ca/" target="_blank" rel="noopener"
-            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:6px 12px;border-radius:8px;transition:background .2s"
+            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:8px 14px;border-radius:8px;transition:background .2s;min-height:36px;display:inline-flex;align-items:center"
             onmouseover="this.style.background='rgba(91,141,238,.2)'" onmouseout="this.style.background='rgba(91,141,238,.1)'">HapticMind ↗</a>
           <a href="https://amanda.parsec4.ai/" target="_blank" rel="noopener"
-            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:6px 12px;border-radius:8px;transition:background .2s"
+            style="font-size:.78rem;color:var(--accent);background:rgba(91,141,238,.1);padding:8px 14px;border-radius:8px;transition:background .2s;min-height:36px;display:inline-flex;align-items:center"
             onmouseover="this.style.background='rgba(91,141,238,.2)'" onmouseout="this.style.background='rgba(91,141,238,.1)'">Amanda AI ↗</a>
         </div>
       </div>
@@ -570,7 +619,7 @@
     <div class="contact-wrap">
       <div class="section-label fade-up">Contact</div>
       <h2 class="section-title fade-up">Let's Talk</h2>
-      <p class="section-sub fade-up" style="margin:0 auto">Have a project idea, partnership proposal, or just want to say hello? We'd love to hear from you.</p>
+      <p class="section-sub fade-up" style="margin:0 auto 0">Have a project idea, partnership proposal, or just want to say hello? We'd love to hear from you.</p>
       <div class="contact-form fade-up">
         <div class="form-row">
           <div class="form-group">
@@ -588,7 +637,7 @@
         </div>
         <div class="form-group">
           <label for="cMessage">Message</label>
-          <textarea id="cMessage" placeholder="Tell us more…"></textarea>
+          <textarea id="cMessage" rows="5" placeholder="Tell us more…"></textarea>
         </div>
         <button class="form-submit" onclick="sendEmail()">Send Message →</button>
         <div class="form-msg" id="formMsg"></div>
@@ -616,205 +665,102 @@
 </footer>
 
 <script>
-/* ── App data ──
-   icon: local path under images/ (run download-icons.sh once to populate)
-   If the local file is missing, falls back to remote Apple CDN URL,
-   and if that also fails, shows the emoji fallback.
-──────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   APP DATA — local icons first, API fallback
+══════════════════════════════════════════════ */
 const APPS = [
-  {
-    id:'872763741', cat:'health',
-    name:'20·20·20 Eye Care & Tracker',
-    desc:'Science-backed break reminders to protect your vision. Haptic alerts, Apple Watch, gamified achievements, and flexible 20/30/40/60-min intervals.',
-    url:'https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741',
-    icon:'images/icon-872763741.jpg',
-    fallback:'👁'
-  },
-  {
-    id:'6746279573', cat:'health',
-    name:'HapticMind – Meditate by Touch',
-    desc:'Eyes-free meditation via haptic rhythm. Box breathing, 4-7-8 patterns, Apple Watch sync. Inclusive mindfulness for everyone.',
-    url:'https://apps.apple.com/us/app/hapticmind-meditate-by-touch/id6746279573',
-    icon:'images/icon-6746279573.jpg',
-    fallback:'🫁'
-  },
-  {
-    id:'6745224568', cat:'ai',
-    name:'Amanda Chat',
-    desc:'An AI-powered mental health companion available 24/7. Meaningful conversations, personalized insights, and emotional well-being tracking.',
-    url:'https://apps.apple.com/us/app/amanda-chat/id6745224568',
-    icon:'images/icon-6745224568.jpg',
-    fallback:'🤖'
-  },
-  {
-    id:'6747080826', cat:'ai',
-    name:'MooDoodle: Voice Mood Doodles',
-    desc:'Speak your mood, watch it become a vivid caricature. Voice AI meets generative art — emotional expression made joyful and uniquely yours.',
-    url:'https://apps.apple.com/us/app/moodoodle-voice-mood-doodles/id6747080826',
-    icon:'images/icon-6747080826.jpg',
-    fallback:'🎨'
-  },
-  {
-    id:'384838619', cat:'education',
-    name:'MagLetters',
-    desc:'Magnetic-style alphabet letters for early learners. Build words, spell names, and playfully explore literacy on a digital fridge board.',
-    url:'https://apps.apple.com/us/app/magletters/id384838619',
-    icon:'images/icon-384838619.jpg',
-    fallback:'🔤'
-  },
-  {
-    id:'429988765', cat:'education',
-    name:'Big or Small 2',
-    desc:'Helps young children grasp size and comparison through gentle, visually engaging interactive play. Because early learning matters most.',
-    url:'https://apps.apple.com/us/app/big-or-small-2/id429988765',
-    icon:'images/icon-429988765.jpg',
-    fallback:'📐'
-  },
-  {
-    id:'440280028', cat:'asd education',
-    name:'Visual Cue',
-    desc:'Clear visual cues to support daily routines and communication for individuals with ASD. May the vision be with you!',
-    url:'https://apps.apple.com/us/app/visual-cue/id440280028',
-    icon:'images/icon-440280028.jpg',
-    fallback:'👁'
-  },
-  {
-    id:'1201264158', cat:'asd education',
-    name:'Visual Schedules',
-    desc:'Reduce anxiety and build independence with picture-based daily schedules tailored for ASD learners and classrooms.',
-    url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',
-    icon:'images/icon-1201264158.jpg',
-    fallback:'📅'
-  },
-  {
-    id:'455248468', cat:'asd education',
-    name:'Visual Working For',
-    desc:"See what's next. Motivate task completion by clearly showing the reward that awaits — trusted in ABA therapy and classroom environments.",
-    url:'https://apps.apple.com/us/app/visual-working-for/id455248468',
-    icon:'images/icon-455248468.jpg',
-    fallback:'🏆'
-  },
-  {
-    id:'826575958', cat:'aac education',
-    name:'Visual Talker',
-    desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.',
-    url:'https://apps.apple.com/us/app/visual-talker/id826575958',
-    icon:'images/icon-826575958.jpg',
-    fallback:'🗣'
-  },
-  {
-    id:'882220839', cat:'aac education',
-    name:'Visual Express',
-    desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.',
-    url:'https://apps.apple.com/us/app/visual-express/id882220839',
-    icon:'images/icon-882220839.jpg',
-    fallback:'💬'
-  },
-  {
-    id:'6670708178', cat:'game',
-    name:'Coloring City',
-    desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.',
-    url:'https://apps.apple.com/us/app/coloring-city/id6670708178',
-    icon:'images/icon-6670708178.jpg',
-    fallback:'🎨'
-  },
+  { id:'872763741',  cat:'health',        icon:'images/icon-872763741.jpg',  fallback:'👁',  name:'20·20·20 Eye Care & Tracker',    url:'https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741',        desc:'Science-backed break reminders to protect your vision. Haptic alerts, Apple Watch, gamified achievements, and flexible 20/30/40/60-min intervals.' },
+  { id:'6746279573', cat:'health',        icon:'images/icon-6746279573.jpg', fallback:'🧘',  name:'HapticMind – Meditate by Touch', url:'https://apps.apple.com/us/app/hapticmind-meditate-by-touch/id6746279573',    desc:'Eyes-free meditation via haptic rhythm. Box breathing, 4-7-8 patterns, Apple Watch sync. Inclusive mindfulness for everyone.' },
+  { id:'6745224568', cat:'ai',            icon:'images/icon-6745224568.jpg', fallback:'🤖',  name:'Amanda Chat',                    url:'https://apps.apple.com/us/app/amanda-chat/id6745224568',                     desc:'An AI-powered mental health companion available 24/7. Meaningful conversations, personalized insights, and emotional well-being tracking.' },
+  { id:'6747080826', cat:'ai',            icon:'images/icon-6747080826.jpg', fallback:'🎨',  name:'MooDoodle: Voice Mood Doodles',  url:'https://apps.apple.com/us/app/moodoodle-voice-mood-doodles/id6747080826',    desc:'Speak your mood, watch it become a vivid caricature. Voice AI meets generative art — emotional expression made joyful and uniquely yours.' },
+  { id:'384838619',  cat:'education',     icon:'images/icon-384838619.jpg',  fallback:'🔤',  name:'MagLetters',                     url:'https://apps.apple.com/us/app/magletters/id384838619',                       desc:'Magnetic-style alphabet letters for early learners. Build words, spell names, and playfully explore literacy on a digital fridge board.' },
+  { id:'429988765',  cat:'education',     icon:'images/icon-429988765.jpg',  fallback:'📐',  name:'Big or Small 2',                 url:'https://apps.apple.com/us/app/big-or-small-2/id429988765',                   desc:'Helps young children grasp size and comparison through gentle, visually engaging interactive play. Because early learning matters most.' },
+  { id:'440280028',  cat:'asd education', icon:'images/icon-440280028.jpg',  fallback:'👁',  name:'Visual Cue',                     url:'https://apps.apple.com/us/app/visual-cue/id440280028',                       desc:'Clear visual cues to support daily routines and communication for individuals with ASD. May the vision be with you!' },
+  { id:'1201264158', cat:'asd education', icon:'images/icon-1201264158.jpg', fallback:'📅',  name:'Visual Schedules',               url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',                desc:'Reduce anxiety and build independence with picture-based daily schedules tailored for ASD learners and classrooms.' },
+  { id:'455248468',  cat:'asd education', icon:'images/icon-455248468.jpg',  fallback:'🏆',  name:'Visual Working For',             url:'https://apps.apple.com/us/app/visual-working-for/id455248468',               desc:"See what's next. Motivate task completion by clearly showing the reward that awaits — trusted in ABA therapy and classroom environments." },
+  { id:'826575958',  cat:'aac education', icon:'images/icon-826575958.jpg',  fallback:'🗣',  name:'Visual Talker',                  url:'https://apps.apple.com/us/app/visual-talker/id826575958',                    desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.' },
+  { id:'882220839',  cat:'aac education', icon:'images/icon-882220839.jpg',  fallback:'💬',  name:'Visual Express',                 url:'https://apps.apple.com/us/app/visual-express/id882220839',                   desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.' },
+  { id:'6670708178', cat:'game',          icon:'images/icon-6670708178.jpg', fallback:'🏙',  name:'Coloring City',                  url:'https://apps.apple.com/us/app/coloring-city/id6670708178',                   desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.' },
 ];
 
-const CAT_LABELS = {
-  health:'Health', ai:'AI', education:'Education',
-  asd:'ASD Focused', aac:'AAC Tools', game:'Game'
-};
-function primaryCat(c){ return c.split(' ')[0]; }
-function catLabel(c){ return CAT_LABELS[primaryCat(c)] || primaryCat(c); }
+const CAT_LABELS = {health:'Health',ai:'AI',education:'Education',asd:'ASD Focused',aac:'AAC Tools',game:'Game'};
+function catLabel(c){ return CAT_LABELS[c.split(' ')[0]] || c.split(' ')[0]; }
 
-/* ── Build icon <img> with 3-level fallback chain:
-   1. Local file (images/icon-{id}.jpg)  — zero network cost after first deploy
-   2. Apple CDN URL                       — if local missing (first deploy)
-   3. Emoji placeholder                   — if both above fail
-─────────────────────────────────────────────────────── */
+/* ── Icon with 3-level fallback: local → iTunes API → emoji ── */
+const _icons = {};
 function iconHtml(app){
-  // Remote CDN URL Apple uses (stable pattern)
-  const remote = `https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/00/00/00/placeholder/512x512bb.jpg`;
-  // We don't know the exact remote hash without the API, so we rely on
-  // the onerror chain: local → fetch remote via API → emoji
-  return `<img
-    src="${app.icon}"
-    alt="${app.name} icon"
-    loading="lazy"
-    onerror="handleIconError(this,'${app.id}','${app.fallback}')"
-  >`;
+  return `<img src="${app.icon}" alt="${app.name} icon" loading="lazy"
+    data-id="${app.id}" data-fb="${app.fallback}"
+    onerror="fetchRemoteIcon(this)">`;
 }
 
-/* Called when local icon file is missing — tries iTunes API once, then emoji */
-const _fetchedIcons = {};  // cache so we only hit API once per session
-async function handleIconError(imgEl, id, fallback){
-  // Avoid infinite onerror loops
-  imgEl.onerror = null;
+let _iconFetchPromise = null;
+async function fetchRemoteIcon(img){
+  img.onerror = null; // prevent loop
+  const id = img.dataset.id;
+  const fb = img.dataset.fb;
 
-  // Already fetched this session?
-  if (_fetchedIcons[id]) {
-    if (_fetchedIcons[id] === 'failed') {
-      imgEl.parentElement.innerHTML = `<span class="app-icon-placeholder">${fallback}</span>`;
-    } else {
-      imgEl.src = _fetchedIcons[id];
-    }
+  // If we already have a URL cached, use it immediately
+  if (_icons[id]){
+    if (_icons[id] === 'failed') showFallback(img, fb);
+    else img.src = _icons[id];
     return;
   }
 
-  // Fetch all icons in one call (first error triggers fetch for all)
-  if (!_fetchedIcons._fetching) {
-    _fetchedIcons._fetching = true;
-    const ids = APPS.map(a => a.id).join(',');
-    const proxies = [
-      `https://api.allorigins.win/get?url=${encodeURIComponent('https://itunes.apple.com/lookup?id='+ids)}`,
-      `https://corsproxy.io/?${encodeURIComponent('https://itunes.apple.com/lookup?id='+ids)}`
-    ];
-    let fetched = false;
-    for (const proxy of proxies){
-      try {
-        const res = await fetch(proxy, {signal: AbortSignal.timeout(8000)});
-        if (!res.ok) continue;
-        const outer = await res.json();
-        const raw = outer.contents || JSON.stringify(outer);
-        const data = JSON.parse(raw);
-        (data.results || []).forEach(r => {
-          if (r.trackId){
-            const url = (r.artworkUrl512 || r.artworkUrl100 || '').replace('100x100bb','512x512bb');
-            _fetchedIcons[String(r.trackId)] = url || 'failed';
-          }
-        });
-        fetched = true;
-        break;
-      } catch(e){ /* try next */ }
-    }
-    if (!fetched) APPS.forEach(a => { _fetchedIcons[a.id] = 'failed'; });
-    _fetchedIcons._fetching = false;
+  // Mark for update once fetch resolves
+  img.dataset.pending = '1';
 
-    /* After fetching, update ALL broken images on the page */
-    document.querySelectorAll('img[data-appid]').forEach(img => {
-      const aid = img.dataset.appid;
-      const url = _fetchedIcons[aid];
-      if (url && url !== 'failed') { img.src = url; }
-      else { img.parentElement.innerHTML = `<span class="app-icon-placeholder">${img.dataset.fallback}</span>`; }
-    });
-    return;
+  // Only fire one fetch for all icons at once
+  if (!_iconFetchPromise){
+    _iconFetchPromise = (async () => {
+      const ids = APPS.map(a => a.id).join(',');
+      const itunesUrl = 'https://itunes.apple.com/lookup?id=' + ids;
+      const proxies = [
+        'https://api.allorigins.win/get?url=' + encodeURIComponent(itunesUrl),
+        'https://corsproxy.io/?url='           + encodeURIComponent(itunesUrl),
+        'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(itunesUrl),
+      ];
+      for (const proxy of proxies){
+        try {
+          const res = await fetch(proxy, {signal: AbortSignal.timeout(8000)});
+          if (!res.ok) continue;
+          const text = await res.text();
+          // Extract JSON — allorigins wraps in {contents:"…"}, others return raw
+          let json;
+          try { const outer = JSON.parse(text); json = outer.contents ? JSON.parse(outer.contents) : outer; }
+          catch { continue; }
+          const results = json.results || [];
+          if (!results.length) continue;
+          results.forEach(r => {
+            if (r.trackId){
+              const url = (r.artworkUrl512 || r.artworkUrl100 || '').replace('100x100bb','512x512bb');
+              _icons[String(r.trackId)] = url || 'failed';
+            }
+          });
+          return; // success
+        } catch { /* try next proxy */ }
+      }
+      // All proxies failed — mark all as failed
+      APPS.forEach(a => { if (!_icons[a.id]) _icons[a.id] = 'failed'; });
+    })();
   }
 
-  // Another fetch already in progress — mark this image for update
-  imgEl.dataset.appid = id;
-  imgEl.dataset.fallback = fallback;
-  // Poll until _fetching is done
-  const wait = setInterval(() => {
-    if (!_fetchedIcons._fetching){
-      clearInterval(wait);
-      const url = _fetchedIcons[id];
-      if (url && url !== 'failed') { imgEl.src = url; }
-      else { imgEl.parentElement.innerHTML = `<span class="app-icon-placeholder">${fallback}</span>`; }
-    }
-  }, 200);
+  await _iconFetchPromise;
+
+  // Now update all pending images
+  document.querySelectorAll('img[data-pending="1"]').forEach(el => {
+    el.removeAttribute('data-pending');
+    const url = _icons[el.dataset.id];
+    if (url && url !== 'failed') el.src = url;
+    else showFallback(el, el.dataset.fb);
+  });
 }
 
-/* ── Render app cards (no async needed — icons self-heal via onerror) ── */
+function showFallback(img, emoji){
+  if (img.parentElement) img.parentElement.innerHTML = `<span class="app-icon-placeholder">${emoji}</span>`;
+}
+
+/* ── Render app cards ── */
 function renderApps(){
   const grid = document.getElementById('appsGrid');
   grid.innerHTML = '';
@@ -841,112 +787,177 @@ function filterApps(cat, btn){
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.app-card').forEach(card => {
-    const match = cat === 'all' || (card.dataset.cat || '').includes(cat);
-    card.classList.toggle('hidden', !match);
+    card.classList.toggle('hidden', cat !== 'all' && !(card.dataset.cat||'').includes(cat));
   });
 }
 
-/* ── Contact — mailto with validation & feedback ── */
+/* ══════════════════════════════════════════════
+   BLOG — Substack RSS with robust parsing
+   
+   RSS2 <link> is tricky: it's a text node that
+   follows the tag (not a child). Must use
+   evaluate/XPath or walk siblings.
+══════════════════════════════════════════════ */
+async function loadBlog(){
+  const feedUrl = 'https://par4san.substack.com/feed';
+
+  // Multiple proxies — different response shapes handled below
+  const proxies = [
+    { url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl), json: true  },
+    { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl), json: false },
+    { url: 'https://corsproxy.io/?'              + encodeURIComponent(feedUrl), json: false },
+    { url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(feedUrl), json: false },
+  ];
+
+  for (const proxy of proxies){
+    try {
+      const res = await fetch(proxy.url, { signal: AbortSignal.timeout(9000) });
+      if (!res.ok) continue;
+
+      let xmlStr;
+      if (proxy.json){
+        // allorigins /get wraps in { contents: "..." }
+        const obj = await res.json();
+        xmlStr = obj.contents || obj.data || '';
+      } else {
+        xmlStr = await res.text();
+        // Some proxies still return JSON even on /raw
+        if (xmlStr.trimStart().startsWith('{')){
+          try { const obj = JSON.parse(xmlStr); xmlStr = obj.contents || obj.data || xmlStr; } catch {}
+        }
+      }
+
+      if (!xmlStr || !xmlStr.includes('<item')) continue;
+
+      const xml = new DOMParser().parseFromString(xmlStr, 'application/xml');
+      if (xml.querySelector('parsererror')) continue;
+
+      const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
+      if (!items.length) continue;
+
+      document.getElementById('blog-loading').style.display = 'none';
+      const grid = document.getElementById('blogGrid');
+
+      items.forEach(item => {
+        const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
+
+        // RSS2 <link> is a text node that appears AFTER the <link/> element,
+        // not inside it. Walk child nodes to find it.
+        let link = item.querySelector('link[href]')?.getAttribute('href') // Atom style
+                || '';
+        if (!link){
+          // Walk child nodes of <item> looking for the text after <link>
+          const nodes = Array.from(item.childNodes);
+          for (let i = 0; i < nodes.length; i++){
+            if (nodes[i].nodeName === 'link'){
+              // text content might be on the node or the next text sibling
+              const txt = (nodes[i].textContent || '').trim()
+                       || (nodes[i+1]?.nodeType === 3 ? nodes[i+1].textContent.trim() : '');
+              if (txt.startsWith('http')) { link = txt; break; }
+            }
+          }
+        }
+        // Final fallback: guid
+        if (!link) link = item.querySelector('guid')?.textContent?.trim() || '#';
+
+        const pubDate = item.querySelector('pubDate')?.textContent || '';
+        const rawDesc = item.querySelector('description')?.textContent
+                     || item.querySelector('summary')?.textContent || '';
+        const desc = rawDesc
+          .replace(/<!\[CDATA\[|\]\]>/g, '')
+          .replace(/<[^>]*>/g, '')
+          .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+          .trim().slice(0, 160) + '…';
+
+        const d = pubDate
+          ? new Date(pubDate).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'})
+          : '';
+
+        const card = document.createElement('a');
+        card.href      = link;
+        card.target    = '_blank';
+        card.rel       = 'noopener noreferrer';
+        card.className = 'blog-card fade-up';
+        card.innerHTML = `<div class="blog-date">${d}</div><h3>${title}</h3><p>${desc}</p>`;
+        grid.appendChild(card);
+      });
+
+      grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+      return; // success — stop trying proxies
+
+    } catch(e){ /* proxy failed, try next */ }
+  }
+
+  // All proxies failed gracefully
+  document.getElementById('blog-loading').innerHTML =
+    '📝 Read our latest articles on <a href="https://par4san.substack.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Substack ↗</a>';
+}
+
+/* ══════════════════════════════════════════════
+   CONTACT FORM
+══════════════════════════════════════════════ */
 function sendEmail(){
   const name    = document.getElementById('cName').value.trim();
   const email   = document.getElementById('cEmail').value.trim();
   const subject = document.getElementById('cSubject').value.trim();
   const message = document.getElementById('cMessage').value.trim();
   const msgEl   = document.getElementById('formMsg');
+  function showMsg(txt, type){ msgEl.textContent=txt; msgEl.className='form-msg '+type; msgEl.style.display='block'; }
 
-  if (!name || !email || !message){
-    msgEl.textContent = 'Please fill in your Name, Email, and Message.';
-    msgEl.className = 'form-msg error';
-    msgEl.style.display = 'block';
-    return;
-  }
-  // Basic email validation
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    msgEl.textContent = 'Please enter a valid email address.';
-    msgEl.className = 'form-msg error';
-    msgEl.style.display = 'block';
-    return;
-  }
+  if (!name || !email || !message){ showMsg('Please fill in Name, Email, and Message.','error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showMsg('Please enter a valid email address.','error'); return; }
 
-  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-  const mailUrl = `mailto:info@amemobile.ca?subject=${encodeURIComponent(subject || 'Website Enquiry')}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailUrl;
-
-  msgEl.textContent = '✓ Opening your email client…';
-  msgEl.className = 'form-msg success';
-  msgEl.style.display = 'block';
-  setTimeout(() => { msgEl.style.display = 'none'; }, 4000);
+  const body   = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  const mailto = `mailto:info@amemobile.ca?subject=${encodeURIComponent(subject||'Website Enquiry')}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+  showMsg('✓ Opening your email client…','success');
+  setTimeout(()=>{ msgEl.style.display='none'; },4000);
 }
 
-/* ── Blog — Substack RSS via CORS proxy ── */
-async function loadBlog(){
-  const proxies = [
-    `https://api.allorigins.win/get?url=${encodeURIComponent('https://par4san.substack.com/feed')}`,
-    `https://corsproxy.io/?${encodeURIComponent('https://par4san.substack.com/feed')}`
-  ];
-  for (const proxyUrl of proxies) {
-    try {
-      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(6000) });
-      if (!res.ok) continue;
-      const outer = await res.json();
-      const raw = outer.contents || '';
-      if (!raw) continue;
-      const xml = new DOMParser().parseFromString(raw, 'text/xml');
-      const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
-      document.getElementById('blog-loading').style.display = 'none';
-      const grid = document.getElementById('blogGrid');
-      if (!items.length) break;
-      items.forEach(item => {
-        const title = item.querySelector('title')?.textContent || 'Untitled';
-        const link  = item.querySelector('link')?.textContent || '#';
-        const date  = item.querySelector('pubDate')?.textContent || '';
-        const desc  = (item.querySelector('description')?.textContent || '')
-          .replace(/<[^>]*>/g, '').slice(0, 150) + '…';
-        const d = date ? new Date(date).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'}) : '';
-        grid.insertAdjacentHTML('beforeend',
-          `<a href="${link}" target="_blank" rel="noopener" class="blog-card fade-up">
-            <div class="blog-date">${d}</div>
-            <h3>${title}</h3>
-            <p>${desc}</p>
-          </a>`);
-      });
-      grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-      return;
-    } catch(e){ /* try next */ }
-  }
-  // Fallback static message
-  document.getElementById('blog-loading').innerHTML =
-    'Visit <a href="https://par4san.substack.com/" target="_blank" style="color:var(--accent)">Substack</a> for our latest articles.';
-}
-
-/* ── Mobile nav ── */
+/* ══════════════════════════════════════════════
+   MOBILE NAV
+══════════════════════════════════════════════ */
 function toggleMenu(){
-  const nav = document.getElementById('navbar');
-  const btn = document.getElementById('navToggle');
-  const isOpen = nav.classList.toggle('open');
-  btn.textContent = isOpen ? '✕' : '☰';
-  document.body.style.overflow = isOpen ? 'hidden' : '';
+  const nav  = document.getElementById('navbar');
+  const btn  = document.getElementById('navToggle');
+  const open = nav.classList.toggle('open');
+  btn.textContent        = open ? '✕' : '☰';
+  btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  document.body.style.overflow = open ? 'hidden' : '';
 }
 function closeMenu(){
   const nav = document.getElementById('navbar');
+  if (!nav.classList.contains('open')) return;
   nav.classList.remove('open');
   document.getElementById('navToggle').textContent = '☰';
+  document.getElementById('navToggle').setAttribute('aria-label','Open menu');
   document.body.style.overflow = '';
 }
-
-/* ── Navbar scroll shrink ── */
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').style.padding = window.scrollY > 40 ? '8px 24px' : '12px 24px';
+// Close on backdrop tap (tap outside links)
+document.getElementById('navbar').addEventListener('click', e => {
+  if (e.target === document.getElementById('navbar') || e.target.id === 'navLinks'){
+    const nav = document.getElementById('navbar');
+    if (nav.classList.contains('open')) closeMenu();
+  }
 });
 
-/* ── Scroll fade-in observer ── */
+/* ── Nav shrink on scroll ── */
+window.addEventListener('scroll', () => {
+  const nb = document.getElementById('navbar');
+  // Only shrink on desktop (mobile has its own nav padding)
+  if (window.innerWidth > 767) {
+    nb.style.padding = window.scrollY > 40 ? '8px 28px' : '14px 28px';
+  }
+}, {passive:true});
+
+/* ── Scroll fade-in ── */
 const fadeObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, {threshold:0.08, rootMargin:'0px 0px -32px 0px'});
 document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 
 /* ── Init ── */
-renderApps();   // Renders immediately using local icons; onerror chain handles missing files
+renderApps();
 loadBlog();
 </script>
 </body>
