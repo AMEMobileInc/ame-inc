@@ -50,6 +50,8 @@
     cursor:pointer;font-size:1.5rem;line-height:1;
     padding:4px;z-index:201;
   }
+  /* Mobile CTA hidden by default — only shown inside open mobile menu */
+  .nav-cta-mobile{display:none}
 
   /* ── HERO ── */
   .hero{
@@ -270,21 +272,29 @@
   }
 
   @media(max-width:768px){
-    /* Nav */
-    .nav-links,.nav-cta{display:none}
+    /* Nav — hide desktop-only elements */
+    .nav-links,
+    #desktopCta{display:none}
     .nav-toggle{display:block}
+    /* Open state — fullscreen overlay */
     nav.open .nav-links{
       display:flex;flex-direction:column;
       position:fixed;top:0;left:0;width:100%;height:100vh;
       background:rgba(5,8,15,.97);
-      padding:100px 32px 40px;gap:24px;
-      border:none;font-size:1.1rem;
-      z-index:199;
+      padding:100px 32px 40px;gap:8px;
+      border:none;z-index:199;
     }
-    nav.open .nav-links a{color:var(--text);font-size:1.2rem;padding:8px 0;border-bottom:1px solid var(--border)}
-    nav.open .nav-cta{
-      display:inline-block;margin-top:8px;
-      text-align:center;padding:14px 20px;font-size:1rem;
+    nav.open .nav-links a{
+      color:var(--text);font-size:1.2rem;
+      padding:16px 0;border-bottom:1px solid var(--border);
+      display:block;
+    }
+    /* The "Get in Touch" inside the mobile menu (last link) gets button styling */
+    nav.open .nav-links a.nav-cta-mobile{
+      display:block;margin-top:16px;border-bottom:none;
+      background:var(--accent);color:#fff;
+      text-align:center;padding:14px 20px;
+      border-radius:10px;font-weight:600;font-size:1rem;
     }
     /* Hero */
     .hero{padding:100px 20px 60px}
@@ -344,7 +354,7 @@
     <a href="#about" onclick="closeMenu()">About</a>
     <a href="#blog" onclick="closeMenu()">Blog</a>
     <a href="#contact" onclick="closeMenu()">Contact</a>
-    <a href="#contact" class="nav-cta" onclick="closeMenu()">Get in Touch</a>
+    <a href="#contact" class="nav-cta-mobile" onclick="closeMenu()">Get in Touch</a>
   </div>
   <a href="#contact" class="nav-cta" id="desktopCta">Get in Touch</a>
   <button class="nav-toggle" id="navToggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
