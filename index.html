@@ -263,6 +263,15 @@ section{padding:100px 24px}
   border-radius:var(--radius);padding:28px;
   transition:transform .25s,border-color .25s;display:block;
 }
+.blog-thumb {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  display: block;
+  background: var(--surface);
+}
 .blog-card:hover{transform:translateY(-3px);border-color:rgba(91,141,238,.3)}
 .blog-date{font-size:.78rem;color:var(--muted);margin-bottom:10px}
 .blog-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;margin-bottom:10px;line-height:1.4}
@@ -847,35 +856,64 @@ async function loadBlog(){
       const grid = document.getElementById('blogGrid');
       items.forEach(item => {
         const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
+        
+        // ── Extract link ──
         let link = item.querySelector('link[href]')?.getAttribute('href') || '';
         if (!link){
           const nodes = Array.from(item.childNodes);
           for (let i = 0; i < nodes.length; i++){
             if (nodes[i].nodeName === 'link'){
               const txt = (nodes[i].textContent || '').trim()
-                       || (nodes[i+1]?.nodeType === 3 ? nodes[i+1].textContent.trim() : '');
+                      || (nodes[i+1]?.nodeType === 3 ? nodes[i+1].textContent.trim() : '');
               if (txt.startsWith('http')) { link = txt; break; }
             }
           }
         }
         if (!link) link = item.querySelector('guid')?.textContent?.trim() || '#';
+
         const pubDate = item.querySelector('pubDate')?.textContent || '';
         const rawDesc = item.querySelector('description')?.textContent
-                     || item.querySelector('summary')?.textContent || '';
+                    || item.querySelector('summary')?.textContent || '';
+
+        // ── Extract thumbnail image ──
+        // Substack puts it in <media:content>, <media:thumbnail>, or <enclosure>, or inside the HTML description
+        let imgUrl = '';
+        const mediaContent   = item.querySelector('content');        // media:content
+        const mediaThumbnail = item.querySelector('thumbnail');      // media:thumbnail
+        const enclosure      = item.querySelector('enclosure');
+
+        if (mediaContent?.getAttribute('url'))        imgUrl = mediaContent.getAttribute('url');
+        else if (mediaThumbnail?.getAttribute('url')) imgUrl = mediaThumbnail.getAttribute('url');
+        else if (enclosure?.getAttribute('url') && enclosure.getAttribute('type')?.startsWith('image'))
+                                                      imgUrl = enclosure.getAttribute('url');
+        else {
+          // Fallback: parse first <img> from description HTML
+          const htmlStr = rawDesc.replace(/<!\[CDATA\[|\]\]>/g, '');
+          const m = htmlStr.match(/<img[^>]+src=["']([^"']+)["']/i);
+          if (m) imgUrl = m[1];
+        }
+
         const desc = rawDesc
           .replace(/<!\[CDATA\[|\]\]>/g, '')
           .replace(/<[^>]*>/g, '')
           .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
           .trim().slice(0, 160) + '…';
+
         const d = pubDate
           ? new Date(pubDate).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'})
           : '';
+
         const card = document.createElement('a');
         card.href      = link;
         card.target    = '_blank';
         card.rel       = 'noopener noreferrer';
         card.className = 'blog-card fade-up';
-        card.innerHTML = `<div class="blog-date">${d}</div><h3>${title}</h3><p>${desc}</p>`;
+        card.innerHTML = `
+          ${imgUrl ? `<img class="blog-thumb" src="${imgUrl}" alt="${title}" loading="lazy" onerror="this.style.display='none'">` : ''}
+          <div class="blog-date">${d}</div>
+          <h3>${title}</h3>
+          <p>${desc}</p>
+        `;
         grid.appendChild(card);
       });
       grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
