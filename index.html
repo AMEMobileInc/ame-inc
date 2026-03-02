@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="theme-color" content="#05080f" />
 <title>AME Mobile Inc. – Crafting Apps That Matter</title>
 <meta name="description" content="AME Mobile Inc. – iOS apps for health, AI, education, and creativity. Based in Canada."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -37,8 +39,9 @@ body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',sans-serif;line-height:1.6;
   overflow-x:hidden;
-  /* NOTE: safe-area insets are handled per-component, not on body,
-     so they don't cascade and break grid/flex layouts */
+  /* preserve bottom inset so the home indicator doesn't overlap content */
+  padding-bottom:var(--sab);
+  /* NOTE: safe-area insets are handled per-component where needed */
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -50,7 +53,7 @@ button{font-family:inherit}
 nav{
   position:fixed;top:0;left:0;width:100%;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
-  padding:14px 28px;
+  padding:calc(14px + var(--sat)) 28px;
   background:rgba(5,8,15,.92);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
@@ -96,7 +99,7 @@ nav{
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   text-align:center;
-  padding:130px 32px 80px;
+  padding:calc(130px + var(--sat)) 32px 80px;
   position:relative;overflow:hidden;
 }
 .hero-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;will-change:transform}
