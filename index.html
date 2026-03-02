@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <title>AME Mobile Inc. – Crafting Apps That Matter</title>
 <meta name="description" content="AME Mobile Inc. – iOS apps for health, AI, education, and creativity. Based in Canada."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -263,79 +265,194 @@
   .fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
   .fade-up.visible{opacity:1;transform:translateY(0)}
 
-  /* ══════════════════════════════════
-     RESPONSIVE — MOBILE FIXES
-  ══════════════════════════════════ */
-  @media(max-width:900px){
-    .about-grid{grid-template-columns:1fr}
-    .about-visual{min-height:auto}
+  /* ══════════════════════════════════════════════════════
+     SAFE AREA INSETS — iPhone notch / Dynamic Island / home bar
+  ══════════════════════════════════════════════════════ */
+  nav{
+    padding-left:max(24px, env(safe-area-inset-left));
+    padding-right:max(24px, env(safe-area-inset-right));
+    padding-top:max(12px, env(safe-area-inset-top));
+  }
+  footer{
+    padding-bottom:max(40px, calc(env(safe-area-inset-bottom) + 20px));
+    padding-left:max(24px, env(safe-area-inset-left));
+    padding-right:max(24px, env(safe-area-inset-right));
+  }
+  .hero{
+    /* push hero content below notch */
+    padding-top:max(120px, calc(env(safe-area-inset-top) + 100px));
+    padding-left:max(24px, env(safe-area-inset-left));
+    padding-right:max(24px, env(safe-area-inset-right));
   }
 
-  @media(max-width:768px){
-    /* Nav — hide desktop-only elements */
-    .nav-links,
-    #desktopCta{display:none}
+  /* ══════════════════════════════════════════════════════
+     TABLET — iPad, large phones landscape
+  ══════════════════════════════════════════════════════ */
+  @media(max-width:1024px){
+    .about-grid{grid-template-columns:1fr}
+    .about-visual{min-height:auto}
+    .apps-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MOBILE — iPhone Max portrait (430px) up to tablets
+     Breakpoint 768px catches all iPhones in portrait AND landscape
+     for smaller models; 932px catches iPhone Max landscape
+  ══════════════════════════════════════════════════════ */
+  @media(max-width:932px) and (pointer:coarse){
+    /* pointer:coarse = touchscreen = all iPhones & iPads */
+
+    /* ── Nav ── */
+    .nav-links,#desktopCta{display:none}
     .nav-toggle{display:block}
-    /* Open state — fullscreen overlay */
+
     nav.open .nav-links{
       display:flex;flex-direction:column;
-      position:fixed;top:0;left:0;width:100%;height:100vh;
-      background:rgba(5,8,15,.97);
-      padding:100px 32px 40px;gap:8px;
-      border:none;z-index:199;
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      height:100dvh; /* dynamic viewport height — accounts for Safari chrome */
+      background:rgba(5,8,15,.98);
+      /* safe-area aware padding */
+      padding-top:max(90px, calc(env(safe-area-inset-top) + 70px));
+      padding-bottom:max(40px, calc(env(safe-area-inset-bottom) + 20px));
+      padding-left:max(32px, env(safe-area-inset-left));
+      padding-right:max(32px, env(safe-area-inset-right));
+      gap:0;border:none;z-index:199;
+      overflow-y:auto;
     }
     nav.open .nav-links a{
       color:var(--text);font-size:1.2rem;
-      padding:16px 0;border-bottom:1px solid var(--border);
+      padding:18px 0;
+      border-bottom:1px solid var(--border);
       display:block;
+      /* minimum 44px tap target (Apple HIG) */
+      min-height:44px;line-height:44px;padding-top:0;padding-bottom:0;
+      border-bottom:1px solid var(--border);
     }
-    /* The "Get in Touch" inside the mobile menu (last link) gets button styling */
     nav.open .nav-links a.nav-cta-mobile{
-      display:block;margin-top:16px;border-bottom:none;
+      display:block;margin-top:24px;border:none;
       background:var(--accent);color:#fff;
-      text-align:center;padding:14px 20px;
-      border-radius:10px;font-weight:600;font-size:1rem;
+      text-align:center;
+      padding:16px 20px;min-height:52px;line-height:1.2;
+      border-radius:12px;font-weight:600;font-size:1rem;
     }
-    /* Hero */
-    .hero{padding:100px 20px 60px}
-    .hero h1{font-size:clamp(2rem,8vw,3rem)}
-    .hero p{font-size:.95rem}
-    .blob1{width:300px;height:300px}
-    .blob2{width:250px;height:250px}
-    .blob3{width:150px;height:150px}
-    /* Sections */
-    section{padding:70px 20px}
-    /* Cats scroll */
+
+    /* ── Hero ── */
+    .hero{padding-bottom:60px}
+    .hero h1{font-size:clamp(2rem,9vw,3.2rem)}
+    .hero p{font-size:.95rem;padding:0 4px}
+    .hero-scroll{margin-top:40px}
+    .blob1{width:280px;height:280px;top:-100px;left:-80px}
+    .blob2{width:220px;height:220px;bottom:-60px;right:-60px}
+    .blob3{width:140px;height:140px}
+
+    /* ── Hero buttons — stack on narrow screens ── */
+    .hero-btns{flex-direction:column;align-items:center;gap:12px}
+    .btn-primary,.btn-ghost{
+      width:100%;max-width:320px;
+      text-align:center;justify-content:center;
+      padding:16px 24px; /* bigger tap target */
+      font-size:1rem;
+    }
+
+    /* ── Sections ── */
+    section{padding:60px 20px}
+    section.surface{padding:60px 20px}
+    .container{padding:0}
+
+    /* ── Filter tabs — horizontal scroll ── */
     .cats{
-      flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
-      padding-bottom:8px;gap:8px;
-      /* hide scrollbar */
+      flex-wrap:nowrap;
+      overflow-x:auto;
+      overflow-y:hidden;
+      touch-action:pan-x;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:10px;
+      margin-bottom:30px;
+      gap:8px;
       scrollbar-width:none;
+      /* extend to edges on iPhone */
+      margin-left:-20px;
+      margin-right:-20px;
+      padding-left:20px;
+      padding-right:20px;
     }
     .cats::-webkit-scrollbar{display:none}
-    .cat-btn{white-space:nowrap;flex-shrink:0;padding:8px 16px;font-size:.82rem}
-    /* Apps grid — single column on small */
-    .apps-grid{grid-template-columns:1fr}
-    /* Blog */
-    .blog-grid{grid-template-columns:1fr}
-    /* Contact form */
+    .cat-btn{
+      white-space:nowrap;flex-shrink:0;
+      padding:10px 18px;font-size:.85rem;
+      min-height:44px; /* Apple HIG minimum tap target */
+    }
+
+    /* ── Apps grid — 1 column on phones, 2 on large phones/iPad ── */
+    .apps-grid{
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .app-card{padding:20px}
+    .app-link{
+      padding:12px 0;font-size:.9rem;
+      min-height:44px;display:inline-flex;align-items:center;
+    }
+
+    /* ── Blog ── */
+    .blog-grid{grid-template-columns:1fr;gap:16px}
+
+    /* ── About ── */
+    .about-grid{grid-template-columns:1fr;gap:32px}
+    .stat-row{grid-template-columns:repeat(3,1fr);gap:10px}
+    .stat{padding:14px 8px}
+    .stat-num{font-size:1.6rem}
+
+    /* ── Contact form ── */
     .form-row{grid-template-columns:1fr}
     .contact-form{padding:24px 20px}
-    /* Stats */
-    .stat-row{grid-template-columns:1fr 1fr}
-    /* Footer */
-    .footer-links{gap:12px}
+    .form-group input,.form-group textarea{
+      font-size:16px; /* prevent iOS auto-zoom */
+      padding:14px 16px; /* bigger tap area */
+    }
+    .form-submit{padding:16px;font-size:1rem;min-height:52px}
+
+    /* ── Footer ── */
+    .footer-links{gap:14px 20px}
   }
 
-  @media(max-width:480px){
+  /* ══════════════════════════════════════════════════════
+     SMALL PHONES — iPhone SE, mini (< 390px)
+  ══════════════════════════════════════════════════════ */
+  @media(max-width:389px){
+    .hero h1{font-size:clamp(1.8rem,10vw,2.6rem)}
     .stat-row{grid-template-columns:1fr 1fr}
-    .hero-btns{flex-direction:column;align-items:center}
-    .btn-primary,.btn-ghost{width:100%;max-width:280px;text-align:center;justify-content:center}
-    section{padding:60px 16px}
-    .apps-grid{gap:14px}
-    /* Larger tap targets */
-    .app-link{padding:10px 0;font-size:.9rem}
-    .cat-btn{padding:10px 16px}
+    .apps-grid{gap:12px}
+    .app-card{padding:16px}
+    section{padding:50px 16px}
+    .section-title{font-size:1.6rem}
+    nav{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  }
+
+  /* ══════════════════════════════════════════════════════
+     LANDSCAPE PHONES — iPhone in landscape orientation
+  ══════════════════════════════════════════════════════ */
+  @media(max-height:500px) and (orientation:landscape) and (pointer:coarse){
+    .hero{min-height:auto;padding-top:80px;padding-bottom:40px}
+    .hero h1{font-size:clamp(1.6rem,5vw,2.2rem)}
+    .hero-scroll{display:none}
+    nav{padding-top:8px}
+    nav.open .nav-links{
+      padding-top:70px;
+      flex-direction:row;flex-wrap:wrap;
+      height:100dvh;align-content:flex-start;
+    }
+    nav.open .nav-links a{width:calc(50% - 16px);font-size:1rem}
+    nav.open .nav-links a.nav-cta-mobile{width:100%}
+  }
+
+  /* ══════════════════════════════════════════════════════
+     TWO-COLUMN APP GRID — wide enough phones / tablets
+     iPhone Max portrait (430px) → 2 columns looks great
+  ══════════════════════════════════════════════════════ */
+  @media(min-width:600px) and (max-width:932px) and (pointer:coarse){
+    .apps-grid{grid-template-columns:repeat(2,1fr)}
+    .blog-grid{grid-template-columns:repeat(2,1fr)}
   }
 </style>
 </head>
@@ -499,20 +616,108 @@
 </footer>
 
 <script>
-/* ── App data ── */
+/* ── App data ──
+   icon: local path under images/ (run download-icons.sh once to populate)
+   If the local file is missing, falls back to remote Apple CDN URL,
+   and if that also fails, shows the emoji fallback.
+──────────────────────────────────────────────────────── */
 const APPS = [
-  { id:'872763741',  cat:'health',        name:'20·20·20 Eye Care & Tracker',    desc:'Science-backed break reminders to protect your vision. Haptic alerts, Apple Watch, gamified achievements, and flexible 20/30/40/60-min intervals.',    url:'https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741',        fallback:'👁' },
-  { id:'6746279573', cat:'health',        name:'HapticMind – Meditate by Touch', desc:'Eyes-free meditation via haptic rhythm. Box breathing, 4-7-8 patterns, Apple Watch sync. Inclusive mindfulness for everyone.',                         url:'https://apps.apple.com/us/app/hapticmind-meditate-by-touch/id6746279573',    fallback:'🫁' },
-  { id:'6745224568', cat:'ai',            name:'Amanda Chat',                    desc:'An AI-powered mental health companion available 24/7. Meaningful conversations, personalized insights, and emotional well-being tracking.',              url:'https://apps.apple.com/us/app/amanda-chat/id6745224568',                     fallback:'🤖' },
-  { id:'6747080826', cat:'ai',            name:'MooDoodle: Voice Mood Doodles',  desc:'Speak your mood, watch it become a vivid caricature. Voice AI meets generative art — emotional expression made joyful and uniquely yours.',            url:'https://apps.apple.com/us/app/moodoodle-voice-mood-doodles/id6747080826',    fallback:'🎨' },
-  { id:'384838619',  cat:'education',     name:'MagLetters',                     desc:'Magnetic-style alphabet letters for early learners. Build words, spell names, and playfully explore literacy on a digital fridge board.',                url:'https://apps.apple.com/us/app/magletters/id384838619',                       fallback:'🔤' },
-  { id:'429988765',  cat:'education',     name:'Big or Small 2',                 desc:'Helps young children grasp size and comparison through gentle, visually engaging interactive play. Because early learning matters most.',                url:'https://apps.apple.com/us/app/big-or-small-2/id429988765',                   fallback:'📐' },
-  { id:'440280028',  cat:'asd education', name:'Visual Cue',                     desc:'Clear visual cues to support daily routines and communication for individuals with ASD. May the vision be with you!',                                   url:'https://apps.apple.com/us/app/visual-cue/id440280028',                       fallback:'👁' },
-  { id:'1201264158', cat:'asd education', name:'Visual Schedules',               desc:'Reduce anxiety and build independence with picture-based daily schedules tailored for ASD learners and classrooms.',                                    url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',                fallback:'📅' },
-  { id:'455248468',  cat:'asd education', name:'Visual Working For',             desc:"See what's next. Motivate task completion by clearly showing the reward that awaits — trusted in ABA therapy and classroom environments.",             url:'https://apps.apple.com/us/app/visual-working-for/id455248468',               fallback:'🏆' },
-  { id:'826575958',  cat:'aac education', name:'Visual Talker',                  desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.',            url:'https://apps.apple.com/us/app/visual-talker/id826575958',                    fallback:'🗣' },
-  { id:'882220839',  cat:'aac education', name:'Visual Express',                 desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.',           url:'https://apps.apple.com/us/app/visual-express/id882220839',                   fallback:'💬' },
-  { id:'6670708178', cat:'game',          name:'Coloring City',                  desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.',      url:'https://apps.apple.com/us/app/coloring-city/id6670708178',                   fallback:'🎨' },
+  {
+    id:'872763741', cat:'health',
+    name:'20·20·20 Eye Care & Tracker',
+    desc:'Science-backed break reminders to protect your vision. Haptic alerts, Apple Watch, gamified achievements, and flexible 20/30/40/60-min intervals.',
+    url:'https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741',
+    icon:'images/icon-872763741.jpg',
+    fallback:'👁'
+  },
+  {
+    id:'6746279573', cat:'health',
+    name:'HapticMind – Meditate by Touch',
+    desc:'Eyes-free meditation via haptic rhythm. Box breathing, 4-7-8 patterns, Apple Watch sync. Inclusive mindfulness for everyone.',
+    url:'https://apps.apple.com/us/app/hapticmind-meditate-by-touch/id6746279573',
+    icon:'images/icon-6746279573.jpg',
+    fallback:'🫁'
+  },
+  {
+    id:'6745224568', cat:'ai',
+    name:'Amanda Chat',
+    desc:'An AI-powered mental health companion available 24/7. Meaningful conversations, personalized insights, and emotional well-being tracking.',
+    url:'https://apps.apple.com/us/app/amanda-chat/id6745224568',
+    icon:'images/icon-6745224568.jpg',
+    fallback:'🤖'
+  },
+  {
+    id:'6747080826', cat:'ai',
+    name:'MooDoodle: Voice Mood Doodles',
+    desc:'Speak your mood, watch it become a vivid caricature. Voice AI meets generative art — emotional expression made joyful and uniquely yours.',
+    url:'https://apps.apple.com/us/app/moodoodle-voice-mood-doodles/id6747080826',
+    icon:'images/icon-6747080826.jpg',
+    fallback:'🎨'
+  },
+  {
+    id:'384838619', cat:'education',
+    name:'MagLetters',
+    desc:'Magnetic-style alphabet letters for early learners. Build words, spell names, and playfully explore literacy on a digital fridge board.',
+    url:'https://apps.apple.com/us/app/magletters/id384838619',
+    icon:'images/icon-384838619.jpg',
+    fallback:'🔤'
+  },
+  {
+    id:'429988765', cat:'education',
+    name:'Big or Small 2',
+    desc:'Helps young children grasp size and comparison through gentle, visually engaging interactive play. Because early learning matters most.',
+    url:'https://apps.apple.com/us/app/big-or-small-2/id429988765',
+    icon:'images/icon-429988765.jpg',
+    fallback:'📐'
+  },
+  {
+    id:'440280028', cat:'asd education',
+    name:'Visual Cue',
+    desc:'Clear visual cues to support daily routines and communication for individuals with ASD. May the vision be with you!',
+    url:'https://apps.apple.com/us/app/visual-cue/id440280028',
+    icon:'images/icon-440280028.jpg',
+    fallback:'👁'
+  },
+  {
+    id:'1201264158', cat:'asd education',
+    name:'Visual Schedules',
+    desc:'Reduce anxiety and build independence with picture-based daily schedules tailored for ASD learners and classrooms.',
+    url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',
+    icon:'images/icon-1201264158.jpg',
+    fallback:'📅'
+  },
+  {
+    id:'455248468', cat:'asd education',
+    name:'Visual Working For',
+    desc:"See what's next. Motivate task completion by clearly showing the reward that awaits — trusted in ABA therapy and classroom environments.",
+    url:'https://apps.apple.com/us/app/visual-working-for/id455248468',
+    icon:'images/icon-455248468.jpg',
+    fallback:'🏆'
+  },
+  {
+    id:'826575958', cat:'aac education',
+    name:'Visual Talker',
+    desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.',
+    url:'https://apps.apple.com/us/app/visual-talker/id826575958',
+    icon:'images/icon-826575958.jpg',
+    fallback:'🗣'
+  },
+  {
+    id:'882220839', cat:'aac education',
+    name:'Visual Express',
+    desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.',
+    url:'https://apps.apple.com/us/app/visual-express/id882220839',
+    icon:'images/icon-882220839.jpg',
+    fallback:'💬'
+  },
+  {
+    id:'6670708178', cat:'game',
+    name:'Coloring City',
+    desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.',
+    url:'https://apps.apple.com/us/app/coloring-city/id6670708178',
+    icon:'images/icon-6670708178.jpg',
+    fallback:'🎨'
+  },
 ];
 
 const CAT_LABELS = {
@@ -522,24 +727,104 @@ const CAT_LABELS = {
 function primaryCat(c){ return c.split(' ')[0]; }
 function catLabel(c){ return CAT_LABELS[primaryCat(c)] || primaryCat(c); }
 
-/* ── Render app cards ── */
-function renderApps(iconMap){
+/* ── Build icon <img> with 3-level fallback chain:
+   1. Local file (images/icon-{id}.jpg)  — zero network cost after first deploy
+   2. Apple CDN URL                       — if local missing (first deploy)
+   3. Emoji placeholder                   — if both above fail
+─────────────────────────────────────────────────────── */
+function iconHtml(app){
+  // Remote CDN URL Apple uses (stable pattern)
+  const remote = `https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/00/00/00/placeholder/512x512bb.jpg`;
+  // We don't know the exact remote hash without the API, so we rely on
+  // the onerror chain: local → fetch remote via API → emoji
+  return `<img
+    src="${app.icon}"
+    alt="${app.name} icon"
+    loading="lazy"
+    onerror="handleIconError(this,'${app.id}','${app.fallback}')"
+  >`;
+}
+
+/* Called when local icon file is missing — tries iTunes API once, then emoji */
+const _fetchedIcons = {};  // cache so we only hit API once per session
+async function handleIconError(imgEl, id, fallback){
+  // Avoid infinite onerror loops
+  imgEl.onerror = null;
+
+  // Already fetched this session?
+  if (_fetchedIcons[id]) {
+    if (_fetchedIcons[id] === 'failed') {
+      imgEl.parentElement.innerHTML = `<span class="app-icon-placeholder">${fallback}</span>`;
+    } else {
+      imgEl.src = _fetchedIcons[id];
+    }
+    return;
+  }
+
+  // Fetch all icons in one call (first error triggers fetch for all)
+  if (!_fetchedIcons._fetching) {
+    _fetchedIcons._fetching = true;
+    const ids = APPS.map(a => a.id).join(',');
+    const proxies = [
+      `https://api.allorigins.win/get?url=${encodeURIComponent('https://itunes.apple.com/lookup?id='+ids)}`,
+      `https://corsproxy.io/?${encodeURIComponent('https://itunes.apple.com/lookup?id='+ids)}`
+    ];
+    let fetched = false;
+    for (const proxy of proxies){
+      try {
+        const res = await fetch(proxy, {signal: AbortSignal.timeout(8000)});
+        if (!res.ok) continue;
+        const outer = await res.json();
+        const raw = outer.contents || JSON.stringify(outer);
+        const data = JSON.parse(raw);
+        (data.results || []).forEach(r => {
+          if (r.trackId){
+            const url = (r.artworkUrl512 || r.artworkUrl100 || '').replace('100x100bb','512x512bb');
+            _fetchedIcons[String(r.trackId)] = url || 'failed';
+          }
+        });
+        fetched = true;
+        break;
+      } catch(e){ /* try next */ }
+    }
+    if (!fetched) APPS.forEach(a => { _fetchedIcons[a.id] = 'failed'; });
+    _fetchedIcons._fetching = false;
+
+    /* After fetching, update ALL broken images on the page */
+    document.querySelectorAll('img[data-appid]').forEach(img => {
+      const aid = img.dataset.appid;
+      const url = _fetchedIcons[aid];
+      if (url && url !== 'failed') { img.src = url; }
+      else { img.parentElement.innerHTML = `<span class="app-icon-placeholder">${img.dataset.fallback}</span>`; }
+    });
+    return;
+  }
+
+  // Another fetch already in progress — mark this image for update
+  imgEl.dataset.appid = id;
+  imgEl.dataset.fallback = fallback;
+  // Poll until _fetching is done
+  const wait = setInterval(() => {
+    if (!_fetchedIcons._fetching){
+      clearInterval(wait);
+      const url = _fetchedIcons[id];
+      if (url && url !== 'failed') { imgEl.src = url; }
+      else { imgEl.parentElement.innerHTML = `<span class="app-icon-placeholder">${fallback}</span>`; }
+    }
+  }, 200);
+}
+
+/* ── Render app cards (no async needed — icons self-heal via onerror) ── */
+function renderApps(){
   const grid = document.getElementById('appsGrid');
   grid.innerHTML = '';
   APPS.forEach((app, i) => {
-    const iconUrl = iconMap && iconMap[app.id];
-    const iconHtml = iconUrl
-      ? `<img src="${iconUrl}" alt="${app.name}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=app-icon-placeholder>${app.fallback}</span>'">`
-      : `<span class="app-icon-placeholder">${app.fallback}</span>`;
-    // Build card as a div (not anchor) — the link is inside
-    // This prevents the entire card being a nested-link, and keeps the
-    // ::before overlay from swallowing pointer events
     const card = document.createElement('div');
     card.className = 'app-card fade-up';
     card.dataset.cat = app.cat;
     card.style.transitionDelay = (i * 0.04) + 's';
     card.innerHTML = `
-      <div class="app-icon-wrap">${iconHtml}</div>
+      <div class="app-icon-wrap">${iconHtml(app)}</div>
       <span class="app-tag">${catLabel(app.cat)}</span>
       <h3>${app.name}</h3>
       <p>${app.desc}</p>
@@ -548,48 +833,7 @@ function renderApps(iconMap){
     grid.appendChild(card);
   });
   document.getElementById('apps-loading').style.display = 'none';
-  // Observe new cards for fade-in
   grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-}
-
-/* ── Fetch app icons via iTunes lookup + CORS proxy ── */
-async function loadAppIcons(){
-  // Render immediately with emoji fallbacks so page isn't blank
-  renderApps(null);
-  const ids = APPS.map(a => a.id).join(',');
-  // Try two different CORS proxies in sequence for reliability
-  const proxies = [
-    `https://api.allorigins.win/get?url=${encodeURIComponent('https://itunes.apple.com/lookup?id=' + ids)}`,
-    `https://corsproxy.io/?${encodeURIComponent('https://itunes.apple.com/lookup?id=' + ids)}`
-  ];
-  for (const proxyUrl of proxies) {
-    try {
-      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(6000) });
-      if (!res.ok) continue;
-      const outer = await res.json();
-      // allorigins wraps in {contents}, corsproxy returns raw
-      const raw = outer.contents || (typeof outer === 'string' ? outer : JSON.stringify(outer));
-      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-      const results = parsed.results || [];
-      if (!results.length) continue;
-      const iconMap = {};
-      results.forEach(r => {
-        if (r.trackId) {
-          const url = (r.artworkUrl512 || r.artworkUrl100 || '')
-            .replace('100x100bb', '512x512bb');
-          if (url) iconMap[String(r.trackId)] = url;
-        }
-      });
-      if (Object.keys(iconMap).length > 0) {
-        renderApps(iconMap); // Re-render with real icons
-        return;
-      }
-    } catch(e) {
-      // Try next proxy
-    }
-  }
-  // All proxies failed — emoji fallbacks already showing, nothing to do
-  console.log('App icons: using emoji fallbacks');
 }
 
 /* ── Filter ── */
@@ -702,7 +946,7 @@ const fadeObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 
 /* ── Init ── */
-loadAppIcons();
+renderApps();   // Renders immediately using local icons; onerror chain handles missing files
 loadBlog();
 </script>
 </body>
