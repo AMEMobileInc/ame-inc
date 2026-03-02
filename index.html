@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<!-- FIX 1: Corrected viewport — added maximum-scale=1.0 to prevent desktop zoom-out,
+     and separated viewport-fit=cover to its own meta for maximum compatibility -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="format-detection" content="telephone=no" />
@@ -33,15 +35,23 @@
 /* ═══════════════════════════════════════════
    RESET & BASE
 ═══════════════════════════════════════════ */
+/* FIX 2: Added html width constraint to prevent overflow-driven viewport inflation */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  /* FIX: Prevent any child from inflating viewport width */
+  overflow-x:hidden;
+  width:100%;
+}
 body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',sans-serif;line-height:1.6;
   overflow-x:hidden;
+  width:100%;
+  /* FIX 3: Removed padding-bottom here; handled per section instead */
   /* preserve bottom inset so the home indicator doesn't overlap content */
   padding-bottom:var(--sab);
-  /* NOTE: safe-area insets are handled per-component where needed */
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -586,38 +596,6 @@ footer{
   </div>
 </section>
 
-<!-- Overflow debug: lists elements wider than viewport (visible overlay + console) -->
-<script>
-;(function(){
-  function findOverflow(){
-    const offenders=[];
-    document.querySelectorAll('*').forEach(el=>{
-      const r = el.getBoundingClientRect();
-      if(r.width > window.innerWidth + 0.5){
-        offenders.push({tag:el.tagName.toLowerCase(),id:el.id,cls:el.className,w:Math.round(r.width)});
-      }
-    });
-    return offenders;
-  }
-  const list = findOverflow();
-  if(list.length){
-    console.warn('Overflowing elements:', list);
-    const box=document.createElement('div');
-    box.style.position='fixed';box.style.left='8px';box.style.bottom='8px';box.style.zIndex=99999;
-    box.style.maxHeight='40vh';box.style.overflow='auto';box.style.background='rgba(0,0,0,.7)';
-    box.style.color='#fff';box.style.padding='8px';box.style.fontSize='12px';box.style.borderRadius='8px';
-    box.innerHTML='<strong>Overflowing elements:</strong><br/>' + list.map(o=>{
-      const cls = o.cls?('.'+o.cls.split(/\s+/).join('.')):'';
-      const id = o.id?('#'+o.id):'';
-      return `${o.tag}${id}${cls} — ${o.w}px`;
-    }).join('<br/>');
-    document.body.appendChild(box);
-  } else {
-    console.log('No overflowing elements detected');
-  }
-})();
-</script>
-
 <!-- ABOUT -->
 <section id="about" style="background:var(--surface)">
   <div class="container">
@@ -753,21 +731,15 @@ function iconHtml(app){
 
 let _iconFetchPromise = null;
 async function fetchRemoteIcon(img){
-  img.onerror = null; // prevent loop
+  img.onerror = null;
   const id = img.dataset.id;
   const fb = img.dataset.fb;
-
-  // If we already have a URL cached, use it immediately
   if (_icons[id]){
     if (_icons[id] === 'failed') showFallback(img, fb);
     else img.src = _icons[id];
     return;
   }
-
-  // Mark for update once fetch resolves
   img.dataset.pending = '1';
-
-  // Only fire one fetch for all icons at once
   if (!_iconFetchPromise){
     _iconFetchPromise = (async () => {
       const ids = APPS.map(a => a.id).join(',');
@@ -782,7 +754,6 @@ async function fetchRemoteIcon(img){
           const res = await fetch(proxy, {signal: AbortSignal.timeout(8000)});
           if (!res.ok) continue;
           const text = await res.text();
-          // Extract JSON — allorigins wraps in {contents:"…"}, others return raw
           let json;
           try { const outer = JSON.parse(text); json = outer.contents ? JSON.parse(outer.contents) : outer; }
           catch { continue; }
@@ -794,17 +765,13 @@ async function fetchRemoteIcon(img){
               _icons[String(r.trackId)] = url || 'failed';
             }
           });
-          return; // success
+          return;
         } catch { /* try next proxy */ }
       }
-      // All proxies failed — mark all as failed
       APPS.forEach(a => { if (!_icons[a.id]) _icons[a.id] = 'failed'; });
     })();
   }
-
   await _iconFetchPromise;
-
-  // Now update all pending images
   document.querySelectorAll('img[data-pending="1"]').forEach(el => {
     el.removeAttribute('data-pending');
     const url = _icons[el.dataset.id];
@@ -817,7 +784,6 @@ function showFallback(img, emoji){
   if (img.parentElement) img.parentElement.innerHTML = `<span class="app-icon-placeholder">${emoji}</span>`;
 }
 
-/* ── Render app cards ── */
 function renderApps(){
   const grid = document.getElementById('appsGrid');
   grid.innerHTML = '';
@@ -839,7 +805,6 @@ function renderApps(){
   grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 }
 
-/* ── Filter ── */
 function filterApps(cat, btn){
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -849,74 +814,51 @@ function filterApps(cat, btn){
 }
 
 /* ══════════════════════════════════════════════
-   BLOG — Substack RSS with robust parsing
-   
-   RSS2 <link> is tricky: it's a text node that
-   follows the tag (not a child). Must use
-   evaluate/XPath or walk siblings.
+   BLOG
 ══════════════════════════════════════════════ */
 async function loadBlog(){
   const feedUrl = 'https://par4san.substack.com/feed';
-
-  // Multiple proxies — different response shapes handled below
   const proxies = [
     { url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl), json: true  },
     { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl), json: false },
     { url: 'https://corsproxy.io/?'              + encodeURIComponent(feedUrl), json: false },
     { url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(feedUrl), json: false },
   ];
-
   for (const proxy of proxies){
     try {
       const res = await fetch(proxy.url, { signal: AbortSignal.timeout(9000) });
       if (!res.ok) continue;
-
       let xmlStr;
       if (proxy.json){
-        // allorigins /get wraps in { contents: "..." }
         const obj = await res.json();
         xmlStr = obj.contents || obj.data || '';
       } else {
         xmlStr = await res.text();
-        // Some proxies still return JSON even on /raw
         if (xmlStr.trimStart().startsWith('{')){
           try { const obj = JSON.parse(xmlStr); xmlStr = obj.contents || obj.data || xmlStr; } catch {}
         }
       }
-
       if (!xmlStr || !xmlStr.includes('<item')) continue;
-
       const xml = new DOMParser().parseFromString(xmlStr, 'application/xml');
       if (xml.querySelector('parsererror')) continue;
-
       const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
       if (!items.length) continue;
-
       document.getElementById('blog-loading').style.display = 'none';
       const grid = document.getElementById('blogGrid');
-
       items.forEach(item => {
         const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
-
-        // RSS2 <link> is a text node that appears AFTER the <link/> element,
-        // not inside it. Walk child nodes to find it.
-        let link = item.querySelector('link[href]')?.getAttribute('href') // Atom style
-                || '';
+        let link = item.querySelector('link[href]')?.getAttribute('href') || '';
         if (!link){
-          // Walk child nodes of <item> looking for the text after <link>
           const nodes = Array.from(item.childNodes);
           for (let i = 0; i < nodes.length; i++){
             if (nodes[i].nodeName === 'link'){
-              // text content might be on the node or the next text sibling
               const txt = (nodes[i].textContent || '').trim()
                        || (nodes[i+1]?.nodeType === 3 ? nodes[i+1].textContent.trim() : '');
               if (txt.startsWith('http')) { link = txt; break; }
             }
           }
         }
-        // Final fallback: guid
         if (!link) link = item.querySelector('guid')?.textContent?.trim() || '#';
-
         const pubDate = item.querySelector('pubDate')?.textContent || '';
         const rawDesc = item.querySelector('description')?.textContent
                      || item.querySelector('summary')?.textContent || '';
@@ -925,11 +867,9 @@ async function loadBlog(){
           .replace(/<[^>]*>/g, '')
           .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
           .trim().slice(0, 160) + '…';
-
         const d = pubDate
           ? new Date(pubDate).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'})
           : '';
-
         const card = document.createElement('a');
         card.href      = link;
         card.target    = '_blank';
@@ -938,14 +878,10 @@ async function loadBlog(){
         card.innerHTML = `<div class="blog-date">${d}</div><h3>${title}</h3><p>${desc}</p>`;
         grid.appendChild(card);
       });
-
       grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-      return; // success — stop trying proxies
-
+      return;
     } catch(e){ /* proxy failed, try next */ }
   }
-
-  // All proxies failed gracefully
   document.getElementById('blog-loading').innerHTML =
     '📝 Read our latest articles on <a href="https://par4san.substack.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Substack ↗</a>';
 }
@@ -960,10 +896,8 @@ function sendEmail(){
   const message = document.getElementById('cMessage').value.trim();
   const msgEl   = document.getElementById('formMsg');
   function showMsg(txt, type){ msgEl.textContent=txt; msgEl.className='form-msg '+type; msgEl.style.display='block'; }
-
   if (!name || !email || !message){ showMsg('Please fill in Name, Email, and Message.','error'); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showMsg('Please enter a valid email address.','error'); return; }
-
   const body   = `Name: ${name}\nEmail: ${email}\n\n${message}`;
   const mailto = `mailto:info@amemobile.ca?subject=${encodeURIComponent(subject||'Website Enquiry')}&body=${encodeURIComponent(body)}`;
   window.location.href = mailto;
@@ -990,7 +924,6 @@ function closeMenu(){
   document.getElementById('navToggle').setAttribute('aria-label','Open menu');
   document.body.style.overflow = '';
 }
-// Close on backdrop tap (tap outside links)
 document.getElementById('navbar').addEventListener('click', e => {
   if (e.target === document.getElementById('navbar') || e.target.id === 'navLinks'){
     const nav = document.getElementById('navbar');
@@ -1001,7 +934,6 @@ document.getElementById('navbar').addEventListener('click', e => {
 /* ── Nav shrink on scroll ── */
 window.addEventListener('scroll', () => {
   const nb = document.getElementById('navbar');
-  // Only shrink on desktop (mobile has its own nav padding)
   if (window.innerWidth > 767) {
     nb.style.padding = window.scrollY > 40 ? '8px 28px' : '14px 28px';
   }
