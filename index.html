@@ -745,7 +745,7 @@ footer{
       <a href="https://haptic-mind.amemobile.ca/" target="_blank" rel="noopener">HapticMind</a>
       <a href="https://amanda.parsec4.ai/" target="_blank" rel="noopener">Amanda AI</a>
       <a href="https://ruralcarejourney.com/" target="_blank" rel="noopener">Rural Care Journey</a>
-      <a href="https://amemobile.net/" target="_blank" rel="noopener">AME Mobile</a>
+      <a href="https://amemobile.net/" target="_blank" rel="noopener">AMEMOBILE.NET</a>
       <a href="mailto:info@amemobile.ca">info@amemobile.ca</a>
       <a href="/support/">Support</a>
       <a href="/privacy/">Privacy Policy</a>
@@ -871,103 +871,36 @@ function filterApps(cat, btn){
 /* ══════════════════════════════════════════════
    BLOG
 ══════════════════════════════════════════════ */
+function renderBlog(items){
+  const loading = document.getElementById('blog-loading');
+  const grid = document.getElementById('blogGrid');
+  if (!Array.isArray(items) || !items.length) throw new Error('No cached articles');
+  loading.style.display = 'none';
+  grid.replaceChildren();
+  items.slice(0, 3).forEach(item => {
+    const card = document.createElement('a');
+    card.href = item.link;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.className = 'blog-card fade-up';
+    const date = item.date ? new Date(item.date).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'}) : '';
+    card.innerHTML = `<div class="blog-date">${date}</div><h3></h3><p></p>`;
+    card.querySelector('h3').textContent = item.title || 'Untitled';
+    card.querySelector('p').textContent = item.description || '';
+    grid.appendChild(card);
+  });
+  grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+}
+
 async function loadBlog(){
-  const feedUrl = 'https://par4san.substack.com/feed';
-  const proxies = [
-    { url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl), json: true  },
-    { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feedUrl), json: false },
-    { url: 'https://corsproxy.io/?'              + encodeURIComponent(feedUrl), json: false },
-    { url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(feedUrl), json: false },
-  ];
-  for (const proxy of proxies){
-    try {
-      const res = await fetch(proxy.url, { signal: AbortSignal.timeout(9000) });
-      if (!res.ok) continue;
-      let xmlStr;
-      if (proxy.json){
-        const obj = await res.json();
-        xmlStr = obj.contents || obj.data || '';
-      } else {
-        xmlStr = await res.text();
-        if (xmlStr.trimStart().startsWith('{')){
-          try { const obj = JSON.parse(xmlStr); xmlStr = obj.contents || obj.data || xmlStr; } catch {}
-        }
-      }
-      if (!xmlStr || !xmlStr.includes('<item')) continue;
-      const xml = new DOMParser().parseFromString(xmlStr, 'application/xml');
-      if (xml.querySelector('parsererror')) continue;
-      const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
-      if (!items.length) continue;
-      document.getElementById('blog-loading').style.display = 'none';
-      const grid = document.getElementById('blogGrid');
-      items.forEach(item => {
-        const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
-        
-        // ── Extract link ──
-        let link = item.querySelector('link[href]')?.getAttribute('href') || '';
-        if (!link){
-          const nodes = Array.from(item.childNodes);
-          for (let i = 0; i < nodes.length; i++){
-            if (nodes[i].nodeName === 'link'){
-              const txt = (nodes[i].textContent || '').trim()
-                      || (nodes[i+1]?.nodeType === 3 ? nodes[i+1].textContent.trim() : '');
-              if (txt.startsWith('http')) { link = txt; break; }
-            }
-          }
-        }
-        if (!link) link = item.querySelector('guid')?.textContent?.trim() || '#';
-
-        const pubDate = item.querySelector('pubDate')?.textContent || '';
-        const rawDesc = item.querySelector('description')?.textContent
-                    || item.querySelector('summary')?.textContent || '';
-
-        // ── Extract thumbnail image ──
-        // Substack puts it in <media:content>, <media:thumbnail>, or <enclosure>, or inside the HTML description
-        let imgUrl = '';
-        const mediaContent   = item.querySelector('content');        // media:content
-        const mediaThumbnail = item.querySelector('thumbnail');      // media:thumbnail
-        const enclosure      = item.querySelector('enclosure');
-
-        if (mediaContent?.getAttribute('url'))        imgUrl = mediaContent.getAttribute('url');
-        else if (mediaThumbnail?.getAttribute('url')) imgUrl = mediaThumbnail.getAttribute('url');
-        else if (enclosure?.getAttribute('url') && enclosure.getAttribute('type')?.startsWith('image'))
-                                                      imgUrl = enclosure.getAttribute('url');
-        else {
-          // Fallback: parse first <img> from description HTML
-          const htmlStr = rawDesc.replace(/<!\[CDATA\[|\]\]>/g, '');
-          const m = htmlStr.match(/<img[^>]+src=["']([^"']+)["']/i);
-          if (m) imgUrl = m[1];
-        }
-
-        const desc = rawDesc
-          .replace(/<!\[CDATA\[|\]\]>/g, '')
-          .replace(/<[^>]*>/g, '')
-          .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
-          .trim().slice(0, 160) + '…';
-
-        const d = pubDate
-          ? new Date(pubDate).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'})
-          : '';
-
-        const card = document.createElement('a');
-        card.href      = link;
-        card.target    = '_blank';
-        card.rel       = 'noopener noreferrer';
-        card.className = 'blog-card fade-up';
-        card.innerHTML = `
-          ${imgUrl ? `<img class="blog-thumb" src="${imgUrl}" alt="${title}" loading="lazy" onerror="this.style.display='none'">` : ''}
-          <div class="blog-date">${d}</div>
-          <h3>${title}</h3>
-          <p>${desc}</p>
-        `;
-        grid.appendChild(card);
-      });
-      grid.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-      return;
-    } catch(e){ /* proxy failed, try next */ }
+  try {
+    const res = await fetch('blog.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`Blog cache returned ${res.status}`);
+    renderBlog(await res.json());
+  } catch(e) {
+    document.getElementById('blog-loading').innerHTML =
+      '📝 Read the latest articles on <a href="https://par4san.substack.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Substack ↗</a>';
   }
-  document.getElementById('blog-loading').innerHTML =
-    '📝 Read our latest articles on <a href="https://par4san.substack.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Substack ↗</a>';
 }
 
 /* ══════════════════════════════════════════════
