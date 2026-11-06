@@ -10,20 +10,20 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="theme-color" content="#05080f" />
 <link rel="icon" type="image/jpeg" href="/images/ame_logo.jpg" />
-<title>AME Mobile | American Medical Ecosystem Mobile</title>
-<meta name="description" content="AME Mobile (American Medical Ecosystem Mobile) builds connected healthcare tools and Rural Care Journey, a data intelligence and tracker for CMS's $50 billion Rural Health Transformation Program across all 50 states."/>
+<title>AME Mobile | Visual Cue and connected care tools</title>
+<meta name="description" content="AME Mobile builds inclusive visual communication and routine tools, including Visual Cue, plus connected healthcare and wellness experiences."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://amemobile.ca/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="AME Mobile Inc."/>
-<meta property="og:title" content="AME Mobile | American Medical Ecosystem Mobile"/>
-<meta property="og:description" content="AME Mobile builds connected healthcare tools and Rural Care Journey, a data intelligence and tracker for CMS's $50 billion Rural Health Transformation Program across all 50 states."/>
+<meta property="og:title" content="AME Mobile | Visual Cue and connected care tools"/>
+<meta property="og:description" content="Visual Cue is the new home for visual schedules, Working For routines, picture communication, and progress across iPhone, iPad, and Mac."/>
 <meta property="og:url" content="https://amemobile.ca/"/>
 <meta property="og:image" content="https://amemobile.ca/images/ame_logo.jpg"/>
 <meta property="og:image:alt" content="AME Mobile logo"/>
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="AME Mobile | American Medical Ecosystem Mobile"/>
-<meta name="twitter:description" content="Rural Care Journey tracks CMS's $50 billion Rural Health Transformation Program across all 50 states."/>
+<meta name="twitter:title" content="AME Mobile | Visual Cue and connected care tools"/>
+<meta name="twitter:description" content="Visual Cue is the new home for visual schedules, Working For routines, picture communication, and progress across iPhone, iPad, and Mac."/>
 <meta name="twitter:image" content="https://amemobile.ca/images/ame_logo.jpg"/>
 <script type="application/ld+json">
 {
@@ -199,6 +199,17 @@ nav{
 .hero-scroll{margin-top:60px;color:var(--muted);font-size:.8rem;display:flex;flex-direction:column;align-items:center;gap:8px}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:linepulse 2s infinite}
 @keyframes linepulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* Visual Cue product announcement */
+.product-announcement{padding-top:0;margin-top:-24px;position:relative;z-index:2}
+.announcement-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:24px 28px;border:1px solid rgba(91,141,238,.32);border-radius:20px;background:linear-gradient(135deg,rgba(91,141,238,.14),rgba(167,139,250,.08));box-shadow:var(--glow)}
+.announcement-icon{width:76px;height:76px;border-radius:18px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.announcement-kicker{color:var(--accent);font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.announcement-card h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:6px}
+.announcement-card p{color:var(--muted);font-size:.92rem;max-width:720px}
+.announcement-card .btn-primary{padding:11px 18px;font-size:.88rem}
+.retirement-note{margin-top:14px;color:var(--muted);font-size:.82rem;text-align:center}
+.retirement-note strong{color:var(--text)}
 
 /* ═══════════════════════════════════════════
    SECTIONS
@@ -526,6 +537,14 @@ footer{
   .app-card   { padding:16px }
 }
 
+@media (max-width:767px){
+  .product-announcement{margin-top:-18px;padding-left:16px;padding-right:16px}
+  .announcement-card{grid-template-columns:auto 1fr;gap:14px;padding:18px}
+  .announcement-icon{width:58px;height:58px;border-radius:14px}
+  .announcement-card .btn-primary{grid-column:1 / -1;justify-content:center}
+  .retirement-note{font-size:.78rem;padding:0 8px}
+}
+
 /* ── SMALL PHONES (≤389px) — SE, mini ──────────────── */
 @media (max-width:389px){
   nav             { padding:10px 16px }
@@ -618,11 +637,26 @@ footer{
 </section>
 
 <!-- APPS -->
+<section class="product-announcement" aria-labelledby="visual-cue-update">
+  <div class="container">
+    <div class="announcement-card fade-up">
+      <img class="announcement-icon" src="images/icon-440280028.jpg" alt="Visual Cue app icon"/>
+      <div>
+        <div class="announcement-kicker">Visual Cue Reboot</div>
+        <h2 id="visual-cue-update">Visual Cue is becoming the home for visual routines</h2>
+        <p>Visual Cue brings visual schedules, Working For routines, picture-based activities, and progress together in one native app for iPhone, iPad, and Mac. Existing owners keep their personal access while we make the transition safe and familiar.</p>
+      </div>
+      <a href="https://apps.apple.com/us/app/visual-cue/id440280028" target="_blank" rel="noopener" class="btn-primary">Open Visual Cue ↗</a>
+    </div>
+    <p class="retirement-note"><strong>Transition notice:</strong> Visual Schedules and Visual Working For are planned to retire after December 31, 2026. Owners can move eligible content into Visual Cue before retirement.</p>
+  </div>
+</section>
+
 <section id="apps">
   <div class="container">
     <div class="section-label fade-up">Portfolio</div>
     <h2 class="section-title fade-up">Our Apps</h2>
-    <p class="section-sub fade-up">From inclusive education tools to AI-powered wellness companions — every app we ship is built with care.</p>
+    <p class="section-sub fade-up">From inclusive visual tools to AI-powered wellness companions — every app we ship is built with care.</p>
     <div class="cats fade-up">
       <button class="cat-btn active" onclick="filterApps('all',this)">All</button>
       <button class="cat-btn" onclick="filterApps('health',this)">Health</button>
@@ -644,7 +678,7 @@ footer{
       <div class="fade-up">
         <div class="section-label">About Us</div>
         <h2 class="section-title">Small Studio,<br>Big Impact</h2>
-        <p style="color:var(--muted);margin-bottom:16px">AME Mobile — American Medical Ecosystem Mobile — builds connected healthcare tools and purposeful mobile experiences. We focus on practical technology that broadens access and strengthens care delivery, especially for rural and underserved communities.</p>
+        <p style="color:var(--muted);margin-bottom:16px">AME Mobile — American Medical Ecosystem Mobile — builds inclusive visual tools, connected healthcare products, and purposeful mobile experiences. We focus on practical technology that broadens access and strengthens everyday independence.</p>
         <p style="color:var(--muted)">From AAC tools that give a voice to non-verbal individuals, to AI companions supporting mental wellness — every product we ship is rooted in real human need.</p>
         <p style="color:var(--muted);margin-top:16px">We also build <strong style="color:var(--text)">Rural Care Journey</strong>, a data intelligence and tracker for the Centers for Medicare &amp; Medicaid Services (CMS) Rural Health Transformation Program (RHTP). It follows the program’s $50 billion in rural health transformation activity across all 50 states, including funding, opportunities, awards, documents, vendors, and implementation activity.</p>
         <p style="color:var(--muted);font-size:.85rem;margin-top:10px">Rural Care Journey uses public-source data for research and informational purposes and is not affiliated with CMS, HHS, or HRSA.</p>
@@ -765,9 +799,9 @@ const APPS = [
   { id:'6747080826', cat:'ai',            icon:'images/icon-6747080826.jpg', fallback:'🎨',  name:'MooDoodle: Voice Mood Doodles',  url:'https://apps.apple.com/us/app/moodoodle-voice-mood-doodles/id6747080826',    desc:'Speak your mood, watch it become a vivid caricature. Voice AI meets generative art — emotional expression made joyful and uniquely yours.' },
   { id:'384838619',  cat:'education',     icon:'images/icon-384838619.jpg',  fallback:'🔤',  name:'MagLetters',                     url:'https://apps.apple.com/us/app/magletters/id384838619',                       desc:'Magnetic-style alphabet letters for early learners. Build words, spell names, and playfully explore literacy on a digital fridge board.' },
   { id:'429988765',  cat:'education',     icon:'images/icon-429988765.jpg',  fallback:'📐',  name:'Big or Small 2',                 url:'https://apps.apple.com/us/app/big-or-small-2/id429988765',                   desc:'Helps young children grasp size and comparison through gentle, visually engaging interactive play. Because early learning matters most.' },
-  { id:'440280028',  cat:'asd education', icon:'images/icon-440280028.jpg',  fallback:'👁',  name:'Visual Cue',                     url:'https://apps.apple.com/us/app/visual-cue/id440280028',                       desc:'Picture-based days for ASD learners: visual schedules in Cue Focused or Working For style, a calendar of daily cues, timers, token boards, and rewarding progress. iPhone, iPad, and Mac.' },
-  { id:'1201264158', cat:'asd education', icon:'images/icon-1201264158.jpg', fallback:'📅',  name:'Visual Schedules',               url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',                desc:'Reduce anxiety and build independence with picture-based daily schedules tailored for ASD learners and classrooms.' },
-  { id:'455248468',  cat:'asd education', icon:'images/icon-455248468.jpg',  fallback:'🏆',  name:'Visual Working For',             url:'https://apps.apple.com/us/app/visual-working-for/id455248468',               desc:"See what's next. Motivate task completion by clearly showing the reward that awaits — trusted in ABA therapy and classroom environments." },
+  { id:'440280028',  cat:'asd education', icon:'images/icon-440280028.jpg',  fallback:'👁',  name:'Visual Cue',                     url:'https://apps.apple.com/us/app/visual-cue/id440280028',                       desc:'The new home for visual routines: schedules, Working For rewards, picture-based activities, communication cues, and progress across iPhone, iPad, and Mac.' },
+  { id:'1201264158', cat:'asd education', icon:'images/icon-1201264158.jpg', fallback:'📅',  name:'Visual Schedules',               url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',                desc:'The original picture-based schedule app. Planned to retire after December 31, 2026; eligible owners can move content into Visual Cue.' },
+  { id:'455248468',  cat:'asd education', icon:'images/icon-455248468.jpg',  fallback:'🏆',  name:'Visual Working For',             url:'https://apps.apple.com/us/app/visual-working-for/id455248468',               desc:'The original visual reward routine app. Planned to retire after December 31, 2026; eligible owners can move content into Visual Cue.' },
   { id:'826575958',  cat:'aac education', icon:'images/icon-826575958.jpg',  fallback:'🗣',  name:'Visual Talker',                  url:'https://apps.apple.com/us/app/visual-talker/id826575958',                    desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.' },
   { id:'882220839',  cat:'aac education', icon:'images/icon-882220839.jpg',  fallback:'💬',  name:'Visual Express',                 url:'https://apps.apple.com/us/app/visual-express/id882220839',                   desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.' },
   { id:'6670708178', cat:'game',          icon:'images/icon-6670708178.jpg', fallback:'🏙',  name:'Coloring City',                  url:'https://apps.apple.com/us/app/coloring-city/id6670708178',                   desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.' },
