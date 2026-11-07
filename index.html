@@ -200,7 +200,7 @@ nav{
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--accent));animation:linepulse 2s infinite}
 @keyframes linepulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* Visual Cue product announcement */
+/* Visual Cue and Visual Talker product announcements */
 .product-announcement{padding-top:0;margin-top:-24px;position:relative;z-index:2}
 .announcement-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:24px 28px;border:1px solid rgba(91,141,238,.32);border-radius:20px;background:linear-gradient(135deg,rgba(91,141,238,.14),rgba(167,139,250,.08));box-shadow:var(--glow)}
 .announcement-icon{width:76px;height:76px;border-radius:18px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.3)}
@@ -208,6 +208,7 @@ nav{
 .announcement-card h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:6px}
 .announcement-card p{color:var(--muted);font-size:.92rem;max-width:720px}
 .announcement-card .btn-primary{padding:11px 18px;font-size:.88rem}
+.announcement-card + .retirement-note + .announcement-card{margin-top:22px}
 .retirement-note{margin-top:14px;color:var(--muted);font-size:.82rem;text-align:center}
 .retirement-note strong{color:var(--text)}
 
@@ -638,7 +639,7 @@ footer{
 </section>
 
 <!-- APPS -->
-<section class="product-announcement" aria-labelledby="visual-cue-update">
+<section class="product-announcement" aria-labelledby="visual-cue-update visual-talker-update">
   <div class="container">
     <div class="announcement-card fade-up">
       <img class="announcement-icon" src="images/icon-440280028.jpg" alt="Visual Cue app icon"/>
@@ -650,6 +651,16 @@ footer{
       <a href="https://apps.apple.com/us/app/visual-cue/id440280028" target="_blank" rel="noopener" class="btn-primary">Open Visual Cue ↗</a>
     </div>
     <p class="retirement-note"><strong>Transition notice:</strong> Visual Schedules and Visual Working For are planned to retire after December 31, 2026. Owners can move eligible content into Visual Cue before retirement.</p>
+    <div class="announcement-card fade-up">
+      <img class="announcement-icon" src="images/icon-826575958.jpg" alt="Visual Talker app icon"/>
+      <div>
+        <div class="announcement-kicker">Visual Talker 7</div>
+        <h2 id="visual-talker-update">Rebuilt as simple AAC that learns how you talk</h2>
+        <p>Tap once to say what you always say. The new Visual Talker for iPhone, iPad, and Mac learns your words as you speak and works offline with no account needed. Visual Talker Plus adds sync across your devices and pictures made for your words.</p>
+      </div>
+      <a href="https://visualtalker.com/" target="_blank" rel="noopener" class="btn-primary">Visit visualtalker.com ↗</a>
+    </div>
+    <p class="retirement-note"><strong>Transition notice:</strong> Visual Express is planned to retire after December 31, 2026. Owners can get Visual Talker free and bring their words, sentences, pictures, and recordings with them.</p>
   </div>
 </section>
 
@@ -803,8 +814,8 @@ const APPS = [
   { id:'440280028',  cat:'asd education', icon:'images/icon-440280028.jpg',  fallback:'👁',  name:'Visual Cue',                     url:'https://apps.apple.com/us/app/visual-cue/id440280028',                       desc:'The new home for visual routines: schedules, Working For rewards, picture-based activities, communication cues, and progress across iPhone, iPad, and Mac.' },
   { id:'1201264158', cat:'asd education', icon:'images/icon-1201264158.jpg', fallback:'📅',  name:'Visual Schedules',               url:'https://apps.apple.com/us/app/visual-schedules/id1201264158',                desc:'The original picture-based schedule app. Planned to retire after December 31, 2026; eligible owners can move content into Visual Cue.' },
   { id:'455248468',  cat:'asd education', icon:'images/icon-455248468.jpg',  fallback:'🏆',  name:'Visual Working For',             url:'https://apps.apple.com/us/app/visual-working-for/id455248468',               desc:'The original visual reward routine app. Planned to retire after December 31, 2026; eligible owners can move content into Visual Cue.' },
-  { id:'826575958',  cat:'aac education', icon:'images/icon-826575958.jpg',  fallback:'🗣',  name:'Visual Talker',                  url:'https://apps.apple.com/us/app/visual-talker/id826575958',                    desc:'The simplest AAC app. Tap a picture, hear a word. Designed for non-verbal individuals who need a reliable voice-output communication tool.' },
-  { id:'882220839',  cat:'aac education', icon:'images/icon-882220839.jpg',  fallback:'💬',  name:'Visual Express',                 url:'https://apps.apple.com/us/app/visual-express/id882220839',                   desc:'Word board with sound. An expressive picture-symbol board that lets non-verbal individuals communicate quickly and clearly in any situation.' },
+  { id:'826575958',  cat:'aac education', icon:'images/icon-826575958.jpg',  fallback:'🗣',  name:'Visual Talker',                  url:'https://apps.apple.com/us/app/visual-talker/id826575958',                    web:'https://visualtalker.com/', desc:'Simple AAC that learns how you talk. Tap once to say what you always say, on iPhone, iPad, and Mac. Works offline, with optional Plus for sync and pictures.' },
+  { id:'882220839',  cat:'aac education', icon:'images/icon-882220839.jpg',  fallback:'💬',  name:'Visual Express',                 url:'https://apps.apple.com/us/app/visual-express/id882220839',                   desc:'The original picture word board with sound. Planned to retire after December 31, 2026; owners can get Visual Talker free and bring their library with them.' },
   { id:'6670708178', cat:'game',          icon:'images/icon-6670708178.jpg', fallback:'🏙',  name:'Coloring City',                  url:'https://apps.apple.com/us/app/coloring-city/id6670708178',                   desc:'Paint the city with colors! A relaxing creative coloring game where players bring an illustrated city to life with vibrant hues and imagination.' },
 ];
 
