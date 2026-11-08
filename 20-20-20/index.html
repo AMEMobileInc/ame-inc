@@ -52,6 +52,16 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.note{background:rgba(60,203,187,.1);border:1px solid rgba(60,203,187,.35);border-radius:18px;padding:28px}.note h2{margin-bottom:10px}.note p{margin:0;color:var(--muted);max-width:720px}.footer{border-top:1px solid var(--border);padding:28px 24px calc(28px + env(safe-area-inset-bottom));text-align:center;color:#91b0ba;font-size:.85rem}.footer a{color:var(--muted);margin:0 8px}
 @media(max-width:860px){.hero{grid-template-columns:1fr;gap:40px;padding-block:48px 44px}.hero-art{max-width:520px;margin-inline:auto}.split{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.wrap{padding-inline:18px}section{padding-block:44px}.numbers,.cards{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.device{grid-template-columns:minmax(0,110px) minmax(0,1fr);gap:16px;padding:16px}.note{padding:22px 20px}}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step;display:grid;gap:14px}.steps li{counter-increment:step;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 22px 20px 72px;position:relative}.steps li::before{content:counter(step);position:absolute;left:22px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#06243a;font:700 1rem/34px 'Space Grotesk',sans-serif;text-align:center}.steps h3{font-size:1.1rem;color:#fff;margin-bottom:4px}.steps p{margin:0;color:var(--muted);font-size:.95rem}.steps .how{color:var(--text);font-size:.9rem;margin-top:6px}
+.tag{display:inline-block;font:600 .72rem/1 'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#06243a;background:var(--sun);border-radius:999px;padding:5px 9px;margin-left:8px;vertical-align:middle}
+.day{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.day .card h3{display:flex;align-items:baseline;gap:10px}.day .card h3 span{color:var(--sun);font-size:.85rem;font-weight:500;font-family:'Inter',sans-serif}.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:.95rem}.card li{margin:4px 0}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:12px}.faq summary{cursor:pointer;font-weight:600;color:#fff}.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}.faq details p{margin:10px 0 0;color:var(--muted);font-size:.95rem}
+@media(max-width:860px){.day{grid-template-columns:1fr}}
+@media(max-width:560px){.steps li{padding:18px 18px 18px 62px}.steps li::before{left:16px;top:18px}}
+.compare{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;font-size:.95rem}.compare th,.compare td{padding:12px 16px;text-align:left;border-top:1px solid var(--border);vertical-align:top}.compare thead th{border-top:0;font-family:'Space Grotesk',sans-serif;color:#fff;font-size:1rem}.compare tbody th{font-weight:500;color:var(--text)}.compare td{color:var(--muted);width:30%}.compare td.yes{color:var(--accent);font-weight:600}.compare .plus-col{color:var(--sun)}
+.who{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}.who .card h3 span{display:inline-block;font:600 .72rem/1 'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:5px 9px;margin-left:8px;vertical-align:middle}.who .free span{background:rgba(60,203,187,.18);color:var(--accent)}.who .plus span{background:var(--sun);color:#06243a}
+@media(max-width:860px){.who{grid-template-columns:1fr}}
+@media(max-width:560px){.compare th,.compare td{padding:10px 10px;font-size:.88rem}}
 </style>
 </head>
 <body>
@@ -81,11 +91,77 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
 
   <section aria-labelledby="devices">
     <h2 id="devices">A break that follows you</h2>
-    <p class="sub">Start where you are. The iPhone and Apple Watch work together, or independently when that is more convenient.</p>
+    <p class="sub">Start where you are. The iPhone and Apple Watch work together, or independently when that is more convenient. Each break counts once, wherever you take it.</p>
     <div class="split">
       <div class="device"><img src="/images/20-20-20/icon-look-far-iphone.png" width="1024" height="1024" alt="20.20.20 iPhone icon"/><div><h3>iPhone reminders</h3><p>Set your days, hours, interval, haptics, and sound. A notification takes you straight into the break.</p></div></div>
       <div class="device"><img src="/images/20-20-20/icon-look-far-watch.png" width="1024" height="1024" alt="20.20.20 Apple Watch icon"/><div><h3>Apple Watch support</h3><p>Run the timer on your wrist, with haptics and a quick way to pause or finish.</p></div></div>
     </div>
+  </section>
+
+
+  <section aria-labelledby="setup">
+    <h2 id="setup">Set up in two minutes</h2>
+    <p class="sub">A few choices at the start decide how well the habit fits your day. Do these once, and the app does the remembering.</p>
+    <ol class="steps">
+      <li><h3>Allow notifications</h3><p>Reminders are how the habit starts. Allow them when 20.20.20 first opens.</p><p class="how">Missed it? Open the iPhone Settings app, then Notifications, then 20.20.20, and turn on Allow Notifications.</p></li>
+      <li><h3>Match reminders to your real working hours</h3><p>On Home, open Schedule Reminders and start from Work Hours (weekdays, 9 to 5), Extended Work (weekdays, 8 to 6) or Every Day (9 to 9), then adjust the days and times. Reminders outside the hours you use a screen just get muted, so keep the window tight.</p></li>
+      <li><h3>Keep the 20-minute rhythm to begin with</h3><p>Twenty minutes is the rule, and it is the default. With Plus, you can choose 30, 40 or 60 minutes. A longer interval you actually keep beats a shorter one you mute.</p></li>
+      <li><h3>Install the Apple Watch app</h3><p>On iPhone, open the Watch app, find 20.20.20 under Available Apps and tap Install. With your iPhone locked and your Watch on, reminders arrive on your wrist, so your phone can stay face down.</p></li>
+      <li><h3>Leave Background Haptics on</h3><p>In the 20.20.20 Watch app, tap the gear. Background Haptics keeps the countdown and the taps going after you lower your wrist. You feel each second pass while you look away, and you never need to check the screen.</p></li>
+      <li><h3>Place your "far point"</h3><p>Pick one spot at least 20 feet (6 metres) away that you can see from your desk: a window, the end of a hallway, a tree outside. Deciding it now means each break starts the moment the reminder arrives.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="break">
+    <h2 id="break">How to take a break that counts</h2>
+    <p class="sub">Twenty seconds is short. These steps make every one of them rest your eyes rather than move them to another screen.</p>
+    <ol class="steps">
+      <li><h3>Start straight from the reminder</h3><p>Tap the notification, or Start Now on your Watch, and the countdown begins at once. No menus, no extra taps.</p></li>
+      <li><h3>Put the screen down and look at your far point</h3><p>Look out at that spot for the whole 20 seconds. Let your eyes relax into the distance instead of reading something.</p></li>
+      <li><h3>Feel the time instead of watching it</h3><p>A light tap each second, on your wrist or your iPhone, tells you the break is running. A different tap tells you it's done.</p></li>
+      <li><h3>Blink slowly a few times</h3><p>Screen time tends to reduce blinking. A few slow, full blinks during the break help your eyes feel more comfortable.</p></li>
+      <li><h3>Not a good moment? Push it, don't skip it</h3><p>On Apple Watch, tap 5 min later. The reminder comes back in five minutes, so the break moves instead of disappearing.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="watch-break">
+    <h2 id="watch-break">Your Watch joins every break<span class="tag">Coming in 5.1</span></h2>
+    <p class="sub">From version 5.1, you won't need to choose a device or open the Watch app.</p>
+    <div class="cards">
+      <div class="card"><h3>Start on iPhone, feel it on your wrist</h3><p>Tap Start Exercise on iPhone and your Apple Watch starts tapping too, even when its app is closed. Put the phone down and look away.</p></div>
+      <div class="card"><h3>Keeps going, wrist down</h3><p>Each Watch break runs as a short Mind and Body workout of about 20 seconds, so the taps don't stop when the screen sleeps. Nothing is saved to Apple Health.</p></div>
+      <div class="card"><h3>Your choice</h3><p>Allow Apple Health when asked, so the Watch can keep running. Prefer iPhone only? Turn off Breaks on Apple Watch in Settings.</p></div>
+    </div>
+    <p class="fine">The Watch needs to be on your wrist and unlocked. A Watch that is locked, or charging, can't be opened from iPhone, so the break runs on iPhone only.</p>
+  </section>
+
+  <section aria-labelledby="day">
+    <h2 id="day">20.20.20 through your day</h2>
+    <p class="sub">The same habit, set up for how you actually spend your time in front of a screen.</p>
+    <div class="day">
+      <div class="card"><h3>Desk work <span>9 to 5</span></h3><p>Use Work Hours for your weekdays.</p><ul><li>Keep your Watch on, and take breaks from your wrist while the phone stays in your bag.</li><li>Use a window as your far point.</li><li>Back-to-back calls? Tap 5 min later rather than muting.</li></ul></div>
+      <div class="card"><h3>Long focus sessions <span>coding, writing, design</span></h3><p>Deep focus is when people forget to look up.</p><ul><li>Let the Watch tap you through the break so you don't lose your place on screen.</li><li>If 20 minutes breaks your flow, Plus lets you try 30 or 40 minutes. A rhythm you keep matters most.</li></ul></div>
+      <div class="card"><h3>Study and reading <span>evenings, exams</span></h3><p>Use Every Day (9 AM to 9 PM), or stretch the end time to cover your evening sessions.</p><ul><li>Pick a far point in your study room before you start: a window or a doorway across the room.</li><li>Your Day Streak shows whether the habit held during a heavy week.</li></ul></div>
+      <div class="card"><h3>Meetings, travel, days off <span>when you can't</span></h3><p>Busy days happen, so make them quiet without losing the habit.</p><ul><li>Mute for today, from Home, your Watch or the notification itself, and reminders start again tomorrow.</li><li>With Plus, pause for an hour or more instead.</li><li>Choose only the days you work, so weekends stay quiet.</li></ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="tips">
+    <h2 id="tips">Make it stick</h2>
+    <p class="sub">Small changes that make the habit easier to keep for weeks, not just days.</p>
+    <div class="cards">
+      <div class="card"><h3>Aim for your daily goal</h3><p>Your goal matches the reminders in your schedule. Today and Day Streak on Home show how you're doing at a glance.</p></div>
+      <div class="card"><h3>Finish, don't abandon</h3><p>If you must stop early, tap Complete rather than leaving it. The time you actually spent is recorded.</p></div>
+      <div class="card"><h3>Review your week</h3><p>With Plus, open Progress Tracking each Friday and look at this week and your last 30 days. Days with fewer breaks usually show where a schedule change would help.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq" class="faq">
+    <h2 id="faq">Questions</h2>
+    <details><summary>Why didn't my Apple Watch tap?</summary><p>Check that Background Haptics is on: in the 20.20.20 Watch app, tap the gear. Reminders appear on the Watch when your iPhone is locked and your Watch is on your wrist. A locked or charging Watch can't run a break.</p></details>
+    <details><summary>Do reminders need an internet connection?</summary><p>Yes. Reminders are sent by our reminder service through Apple, so your iPhone needs a connection. Breaks, the timer and your progress all work without one.</p></details>
+    <details><summary>Does it work without an Apple Watch?</summary><p>Yes. Everything works on iPhone alone, with haptics each second and a calm countdown on screen.</p></details>
+    <details><summary>Is this a medical app?</summary><p>No. 20.20.20 is a wellness habit tool. It doesn't diagnose or treat any condition. If you have concerns about your eyes, please see an eye-care professional.</p></details>
   </section>
 
   <section aria-labelledby="progress">
@@ -103,7 +179,25 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
   </section>
 
   <section aria-labelledby="plus">
-    <div class="note"><h2 id="plus">Free for the habit. Plus for more.</h2><p>Breaks and reminders stay free for everyone. 20.20.20 Plus adds custom intervals, more pause options, history and trends, achievements, alternate icons, ring themes, and a Supporter badge.</p></div>
+    <h2 id="plus">Free or Plus?</h2>
+    <p class="sub">The habit itself is free for everyone, on iPhone and Apple Watch. Plus is for people who want to shape it around their day, see how it goes over time, and support a small app.</p>
+    <table class="compare">
+      <thead><tr><th scope="col">What you get</th><th scope="col">Free</th><th scope="col" class="plus-col">Plus</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">20-second breaks with haptics, on iPhone and Apple Watch</th><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Reminders on your days and hours</th><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Reminder interval</th><td>Every 20 minutes</td><td>20, 30, 40 or 60 minutes</td></tr>
+        <tr><th scope="row">Quiet time</th><td>Mute for today, and 5 min later on Apple Watch</td><td>Also pause for 1, 2 or 4 hours</td></tr>
+        <tr><th scope="row">Progress</th><td>Today, Day Streak and your daily goal</td><td>Also this week, the last 30 days and long-term trends</td></tr>
+        <tr><th scope="row">Achievements</th><td>–</td><td>Six to earn, from First Break to Consistency King</td></tr>
+        <tr><th scope="row">Make it yours</th><td>–</td><td>Alternate app icons, ring colours and a Supporter badge</td></tr>
+      </tbody>
+    </table>
+    <div class="who">
+      <div class="card free"><h3>Free is enough if…<span>Free</span></h3><ul><li><b>You follow the rule as it is.</b> A reminder every 20 minutes during work hours, and a 20-second break each time.</li><li><b>Your days are predictable.</b> Office hours, school hours, a regular shift. The schedule and Mute for today cover the exceptions.</li><li><b>You want a nudge, not numbers.</b> Today and your Day Streak are all you need to know you're keeping it up.</li></ul></div>
+      <div class="card plus"><h3>Plus is worth it if…<span>Plus</span></h3><ul><li><b>20 minutes breaks your flow.</b> A developer or designer in deep focus can try 40 minutes, then move back toward 20 as the habit settles.</li><li><b>Your day has blocks.</b> Pause for 2 hours through a workshop or a flight, and reminders come back on their own, without remembering to turn them on.</li><li><b>You like to see progress.</b> Your week and last 30 days show which days slip, and achievements make the first weeks easier to stick with.</li><li><b>You want to support the app.</b> Plus keeps 20.20.20 growing, with no ads and no tracking.</li></ul></div>
+    </div>
+    <p class="fine">Plus is available monthly or yearly through your Apple Account, and the price is shown in the app. If you bought 20.20.20 before it became free, Plus is yours for life, with our thanks.</p>
   </section>
 </main>
 
