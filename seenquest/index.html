@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#eef7f2"/>
+<link rel="icon" type="image/png" href="/images/seenquest/icon.png"/>
+<title>SeenQuest — Look, remember, find it | AME Mobile</title>
+<meta name="description" content="SeenQuest is I Saw It, rebuilt: a friendly visual-memory game. Remember the board, then find the picture you saw. I Saw It Classic, a 100-level Memory Journey and a Daily Challenge. No account, no ads. For iPhone, iPad and iPhone Duo."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://amemobile.ca/seenquest/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AME Mobile Inc."/>
+<meta property="og:title" content="SeenQuest — Look, remember, find it"/>
+<meta property="og:description" content="The I Saw It memory game, rebuilt: Classic, a 100-level Journey and a daily puzzle. No account, no ads."/>
+<meta property="og:url" content="https://amemobile.ca/seenquest/"/>
+<meta property="og:image" content="https://amemobile.ca/images/seenquest/header.jpg"/>
+<meta property="og:image:alt" content="The SeenQuest name beside a grid of pictures to remember on iPad"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SeenQuest — Look, remember, find it"/>
+<meta name="twitter:description" content="The I Saw It memory game, rebuilt: Classic, a 100-level Journey and a daily puzzle."/>
+<meta name="twitter:image" content="https://amemobile.ca/images/seenquest/header.jpg"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "SeenQuest: Memory Games",
+  "url": "https://amemobile.ca/seenquest/",
+  "operatingSystem": "iOS 17 or later, iPadOS 17 or later",
+  "applicationCategory": "GameApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "AME Mobile Inc.", "url": "https://amemobile.ca/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+/* The Morning4U page's layout, in SeenQuest's mint and teal. */
+:root{--bg:#eef7f2;--card:#ffffff;--border:rgba(18,54,58,.14);--accent:#0b6b60;--accent-ink:#fff;--honey:#c4561c;--leaf:#0b6b60;--text:#12363a;--muted:#43625f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 85% 0,rgba(94,211,193,.30),transparent 720px),var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+img{max-width:100%;height:auto;display:block}h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;margin:0;color:var(--text)}
+nav{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border);background:rgba(238,247,242,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:16px max(24px,env(safe-area-inset-right)) 16px max(24px,env(safe-area-inset-left))}
+.nav-inner{max-width:1080px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{color:var(--text);font-weight:700}.back{color:var(--muted);font-size:.9rem}
+.wrap{max-width:1080px;margin:auto;padding-inline:24px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:52px;align-items:center;padding-block:72px 64px}
+.app-id{display:flex;align-items:center;gap:14px;margin-bottom:22px}.app-id img{width:64px;height:64px;border-radius:15px;box-shadow:0 6px 18px rgba(10,60,55,.2)}.app-id strong{font-family:'Fraunces',serif;font-size:1.25rem;display:block;line-height:1.25}.app-id span{color:var(--muted);font-size:.9rem}
+h1{font-size:clamp(2.5rem,6vw,4rem);margin-bottom:18px;text-wrap:balance}h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted);margin:0 0 28px;max-width:560px}
+.badge{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:13px 24px;border-radius:999px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.18)}
+.fine{color:var(--muted);font-size:.9rem;margin:16px 0 0}
+.hero-shot{max-width:300px;margin-inline:auto;border-radius:28px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(10,80,70,.22)}
+section{scroll-margin-top:72px;padding-block:56px;border-top:1px dashed var(--border)}h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:12px}.sub{color:var(--muted);margin:0 0 32px;max-width:680px}
+.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.number,.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;position:relative}
+.number::after,.card::after{content:"";position:absolute;inset:7px;border:1.5px dashed rgba(11,107,96,.22);border-radius:14px;pointer-events:none}
+.number strong{display:block;font-family:'Fraunces',serif;color:var(--accent);font-size:2.6rem;line-height:1;margin-bottom:10px}.number h3,.card h3{font-size:1.15rem;margin-bottom:6px}.number p,.card p{margin:0;color:var(--muted);font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:40px;align-items:center}.feature.flip{grid-template-columns:minmax(0,300px) minmax(0,1fr)}.feature.flip .shot{order:-1}
+.shot{border-radius:24px;border:1px solid var(--border);box-shadow:0 18px 50px rgba(10,60,55,.18)}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.gallery figure{margin:0}.gallery img{border-radius:18px;border:1px solid var(--border)}.gallery figcaption{color:var(--muted);font-size:.85rem;padding:8px 2px 0}
+.points{margin:16px 0 0;padding-left:20px;color:var(--muted)}.points li{margin:6px 0}.points b{color:var(--text);font-weight:600}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step;display:grid;gap:14px}.steps li{counter-increment:step;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px 22px 20px 72px;position:relative}.steps li::before{content:counter(step);position:absolute;left:22px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font:700 1rem/34px 'Inter',sans-serif;text-align:center}.steps h3{font-size:1.1rem;margin-bottom:4px}.steps p{margin:0;color:var(--muted);font-size:.95rem}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;margin-bottom:12px}.faq summary{cursor:pointer;font-weight:600}.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}.faq details p{margin:10px 0 0;color:var(--muted);font-size:.95rem}
+.banner{border-radius:20px;border:1px solid var(--border)}
+.footer{border-top:1px solid var(--border);padding:28px 24px calc(28px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:.85rem}.footer a{color:var(--muted);margin:0 8px}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:40px;padding-block:48px 44px}.feature,.feature.flip{grid-template-columns:1fr;gap:28px}.feature.flip .shot{order:0}.shot{max-width:300px;margin-inline:auto}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding-inline:18px}section{padding-block:44px}.numbers,.cards{grid-template-columns:1fr}.steps li{padding:18px 18px 18px 62px}.steps li::before{left:16px;top:18px}}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a class="brand" href="/">AME Mobile Inc.</a><a class="back" href="/#apps">← All apps</a></div></nav>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="app-id"><img src="/images/seenquest/icon.png" alt="" width="64" height="64"/><div><strong>SeenQuest</strong><span>Memory Games</span></div></div>
+      <h1>Look, remember, <em>find it.</em></h1>
+      <p class="lede">SeenQuest is I Saw It, rebuilt. Look at the pictures, tap Ready, then find the one you saw. You can understand it in seconds and play for a minute or an hour, and there's no timer unless you want one.</p>
+      <span class="badge">Coming soon to the App Store</span>
+      <p class="fine">For iPhone, iPad and iPhone Duo. Free, with an optional one-time Premium. No account, no ads, no tracking.</p>
+    </div>
+    <img class="hero-shot" src="/images/seenquest/iphone-01-home.jpg" width="506" height="1100" alt="SeenQuest on iPhone: Continue Journey, I Saw It Classic, the Daily Challenge and two more modes"/>
+  </div>
+
+  <section aria-labelledby="ways">
+    <h2 id="ways">Three ways to play, free</h2>
+    <p class="sub">I Saw It Classic, the first 30 Journey levels and the Daily Challenge are free for everyone, offline, with no sign-in.</p>
+    <div class="numbers">
+      <div class="number"><strong>1</strong><h3>Classic</h3><p>The original game. Each new board holds one picture from the last.</p></div>
+      <div class="number"><strong>100</strong><h3>Journey levels</h3><p>Five worlds, each level about a minute, replayable as often as you like.</p></div>
+      <div class="number"><strong>5</strong><h3>Daily rounds</h3><p>One shared puzzle a day, the same for everyone, playable offline.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="classic">
+    <div class="feature">
+      <div>
+        <h2 id="classic">I Saw It Classic</h2>
+        <p class="sub">The board you answer on is the one to remember next, just as it always was.</p>
+        <ul class="points">
+          <li><b>Five lives,</b> and boards that grow from 2×2 to 5×5 as your score climbs.</li>
+          <li><b>Standard</b> is the original. <b>Relaxed</b> pauses after every answer, and misses cost no points.</li>
+          <li><b>Challenge</b> adds a few seconds per board, and pictures that look alike.</li>
+        </ul>
+      </div>
+      <img class="shot" src="/images/seenquest/iphone-02-classic.jpg" width="506" height="1100" loading="lazy" alt="A Classic board of nine pictures, with the score and lives above"/>
+    </div>
+  </section>
+
+  <section aria-labelledby="journey">
+    <div class="feature flip">
+      <img class="shot" src="/images/seenquest/iphone-03-journey.jpg" width="506" height="1100" loading="lazy" alt="The Memory Journey map, with stars on finished levels"/>
+      <div>
+        <h2 id="journey">Memory Journey</h2>
+        <p class="sub">100 levels in five worlds. No lives, no energy and no waiting. Earn up to three stars on each.</p>
+        <ul class="points">
+          <li><b>Memory Garden:</b> find the pictures you saw.</li>
+          <li><b>Hidden Forest:</b> what's missing, and which square changed?</li>
+          <li><b>Pattern Valley:</b> where was it, and in what order?</li>
+          <li><b>Mystery Island:</b> a bit of everything.</li>
+          <li><b>Memory Castle:</b> swaps, colour changes and long sequences.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="daily">
+    <div class="feature">
+      <div>
+        <h2 id="daily">A puzzle every day</h2>
+        <p class="sub">The Daily Challenge is the same five rounds for everyone on the same date. The first play counts toward your streak, and you can share your result without giving the answers away.</p>
+        <ul class="points">
+          <li><b>Your Progress</b> shows your Classic best, levels, stars, accuracy, streak and achievements.</li>
+          <li><b>Game results only.</b> SeenQuest is a game. It doesn't measure, prevent or treat memory loss or any other condition.</li>
+        </ul>
+      </div>
+      <img class="shot" src="/images/seenquest/iphone-06-daily.jpg" width="506" height="1100" loading="lazy" alt="The Daily Challenge finished, 5 of 5, with a streak"/>
+    </div>
+  </section>
+
+  <section aria-labelledby="screens">
+    <h2 id="screens">On every screen</h2>
+    <p class="sub">Larger tiles on iPad and the open iPhone Duo. Half-fold iPhone Duo and the board sits on one side of the hinge, the buttons on the other.</p>
+    <img class="banner" src="/images/seenquest/header.jpg" width="1920" height="823" loading="lazy" alt="SeenQuest on iPad: a grid of nine pictures to remember"/>
+    <div class="gallery" style="margin-top:20px">
+      <figure><img class="" src="/images/seenquest/iphone-04-study.jpg" width="506" height="1100" loading="lazy" alt="A grid of pictures to study"/><figcaption>Study the grid.</figcaption></figure>
+      <figure><img class="" src="/images/seenquest/iphone-05-right.jpg" width="506" height="1100" loading="lazy" alt="The right answers ticked: That’s right!"/><figcaption>Find what you saw.</figcaption></figure>
+      <figure><img class="" src="/images/seenquest/iphone-07-progress.jpg" width="506" height="1100" loading="lazy" alt="Your Progress: Classic best, stars and achievements"/><figcaption>Your progress.</figcaption></figure>
+      <figure><img class="" src="/images/seenquest/ipad-03-journey.jpg" width="825" height="1100" loading="lazy" alt="The Journey map on iPad"/><figcaption>iPad: the Journey map.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="everyone">
+    <h2 id="everyone">Comfortable to play</h2>
+    <div class="cards">
+      <div class="card"><h3>Clear pictures</h3><p>Large, simple pictures with their names underneath, and a choice of tile sizes.</p></div>
+      <div class="card"><h3>Not colour alone</h3><p>Right and wrong are shown with symbols, and strong outlines are one switch away.</p></div>
+      <div class="card"><h3>VoiceOver</h3><p>Every picture and button is labelled, and nothing read aloud gives an answer away.</p></div>
+      <div class="card"><h3>Your own pace</h3><p>No timer outside Classic Challenge. Pause any time, and Reduce Motion is respected.</p></div>
+      <div class="card"><h3>Sounds and haptics</h3><p>Both optional, and sounds follow the silent switch.</p></div>
+      <div class="card"><h3>Private by design</h3><p>No account, no ads, no tracking, and no internet needed. Progress stays on your device.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="premium">
+    <h2 id="premium">Free, or Premium?</h2>
+    <p class="sub">Classic, levels 1 to 30 and the Daily Challenge stay free. SeenQuest Premium is one purchase, yours for life, with no subscription.</p>
+    <div class="cards">
+      <div class="card"><h3>Levels 31 to 100</h3><p>The rest of Hidden Forest, then Pattern Valley, Mystery Island and Memory Castle.</p></div>
+      <div class="card"><h3>Two more modes</h3><p>What Changed? and Sequence Recall, six rounds each.</p></div>
+      <div class="card"><h3>More statistics</h3><p>Each world, each mode and the last 30 days, plus four more board themes. New levels and modes in SeenQuest 2 are included.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq" class="faq">
+    <h2 id="faq">Questions</h2>
+    <details><summary>I played I Saw It. What changed?</summary><p>SeenQuest is I Saw It rebuilt from scratch, as an update to the same app. The original game is here as I Saw It Classic, with Relaxed and Challenge styles, alongside the Journey, the Daily Challenge and two new modes. Everyone starts with a fresh score.</p></details>
+    <details><summary>Does SeenQuest need an internet connection?</summary><p>No. Every level and every Daily Challenge is made on your device. A connection is used only to buy or restore Premium.</p></details>
+    <details><summary>Is there an account, or ads?</summary><p>Neither. There's no sign-in, no advertising and no tracking.</p></details>
+    <details><summary>Is SeenQuest brain training?</summary><p>No. It's a game, and its statistics are game results. It isn't a medical product.</p></details>
+    <details><summary>How do I restore Premium?</summary><p>Open Settings, then Premium, and tap Restore Purchases. Premium is shared with your Family Sharing group.</p></details>
+    <details><summary>Need help?</summary><p>Email <a href="mailto:info@amemobile.ca?subject=SeenQuest">info@amemobile.ca</a> with your device model and what happened.</p></details>
+  </section>
+</main>
+<div class="footer"><p><a href="/">AME Mobile</a><a href="/support/">Support</a><a href="/privacy/#seenquest">Privacy Policy</a></p>© 2026 AME Mobile Inc. All rights reserved.</div>
+</body>
+</html>
