@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#f7efe8"/>
+<link rel="icon" type="image/png" href="/images/last-sol/icon.png"/>
+<title>Last Sol: Mars Expedition — Land, explore, survive, return | AME Mobile</title>
+<meta name="description" content="Fly your own landing on Mars, build a base that works through the night, drive to real places, collect NASA photos and find your way home. A pixel-art Mars expedition for iPhone, iPad and Mac. Free, with an optional one-time Plus."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://amemobile.ca/last-sol/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AME Mobile Inc."/>
+<meta property="og:title" content="Last Sol: Mars Expedition — Every landing changes your story."/>
+<meta property="og:description" content="Land on Mars, build a base, explore, and find your way home. Real science, real NASA photos, five endings."/>
+<meta property="og:url" content="https://amemobile.ca/last-sol/"/>
+<meta property="og:image" content="https://amemobile.ca/images/last-sol/header.jpg"/>
+<meta property="og:image:alt" content="Last Sol, Mars Expedition, beside the Mars base on an iPad"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Last Sol: Mars Expedition"/>
+<meta name="twitter:description" content="Every landing changes your story. Land, explore, survive and return."/>
+<meta name="twitter:image" content="https://amemobile.ca/images/last-sol/header.jpg"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Last Sol: Mars Expedition",
+  "url": "https://amemobile.ca/last-sol/",
+  "operatingSystem": "iOS 17 or later, iPadOS 17 or later, macOS",
+  "applicationCategory": "GameApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "AME Mobile Inc.", "url": "https://amemobile.ca/" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+/* The Destroyer Defense page's layout, in Last Sol's Mars rust on dusty sand, with a night-sky band. */
+:root{--bg:#f7efe8;--card:#ffffff;--border:rgba(42,24,34,.14);--accent:#b8452a;--accent-ink:#fff;--night:#1d1426;--text:#22161f;--muted:#5d4f57}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 85% 0,rgba(214,120,80,.22),transparent 720px),var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+img{max-width:100%;height:auto;display:block}h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;margin:0;color:var(--text)}
+nav{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border);background:rgba(247,239,232,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:16px max(24px,env(safe-area-inset-right)) 16px max(24px,env(safe-area-inset-left))}
+.nav-inner{max-width:1080px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{color:var(--text);font-weight:700}.back{color:var(--muted);font-size:.9rem}
+.wrap{max-width:1080px;margin:auto;padding-inline:24px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:48px;align-items:center;padding-block:72px 64px}
+.app-id{display:flex;align-items:center;gap:14px;margin-bottom:22px}.app-id img{width:64px;height:64px;border-radius:15px;box-shadow:0 6px 18px rgba(60,20,10,.22)}.app-id strong{font-family:'Fraunces',serif;font-size:1.25rem;display:block;line-height:1.25}.app-id span{color:var(--muted);font-size:.9rem}
+h1{font-size:clamp(2.5rem,6vw,4rem);margin-bottom:18px;text-wrap:balance}h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:1.15rem;color:var(--muted);margin:0 0 28px;max-width:560px}
+.badge{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:13px 24px;border-radius:999px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.18)}
+.fine{color:var(--muted);font-size:.9rem;margin:16px 0 0}
+.wide-shot{border-radius:22px;border:1px solid var(--border);box-shadow:0 18px 50px rgba(60,20,10,.2);image-rendering:pixelated}
+.tall-shot{max-width:280px;margin-inline:auto;border-radius:28px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(60,20,10,.22);image-rendering:pixelated}
+section{scroll-margin-top:72px;padding-block:56px;border-top:1px dashed var(--border)}h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:12px}.sub{color:var(--muted);margin:0 0 32px;max-width:680px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;position:relative}
+.card::after{content:"";position:absolute;inset:7px;border:1.5px dashed rgba(184,69,42,.2);border-radius:14px;pointer-events:none}
+.card h3{font-size:1.15rem;margin-bottom:6px}.card p{margin:0;color:var(--muted);font-size:.95rem}.card .tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;background:#f1e2d8;color:var(--accent);margin-bottom:8px}.card .tag.plus{background:#fff1c9;color:#7a4b00}
+.feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,280px);gap:44px;align-items:center}.feature.wide{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step;display:grid;gap:14px}.steps li{counter-increment:step;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px 22px 20px 72px;position:relative}.steps li::before{content:counter(step);position:absolute;left:22px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font:700 1rem/34px 'Inter',sans-serif;text-align:center}.steps h3{font-size:1.1rem;margin-bottom:4px}.steps p{margin:0;color:var(--muted);font-size:.95rem}
+.points{margin:16px 0 0;padding-left:20px;color:var(--muted)}.points li{margin:6px 0}.points b{color:var(--text);font-weight:600}
+.night{background:var(--night);color:#f3e9e1;border-radius:28px;padding:40px;border:0;margin-block:8px}.night h2,.night h3{color:#fff5ea}.night .sub,.night p{color:#cdbfc8}.night .endings{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 28px;padding:0;list-style:none}
+.night .endings li{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px}.night .endings b{display:block;font-family:'Fraunces',serif;color:#ffcf7a;font-size:1.05rem;margin-bottom:4px}.night .endings span{font-size:.88rem;color:#cdbfc8}.night .endings .plus b::after{content:" · Plus";font-family:'Inter',sans-serif;font-size:.72rem;color:#ffcf7a;opacity:.8}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.gallery figure{margin:0}.gallery img{border-radius:16px;border:1px solid var(--border);image-rendering:pixelated}.gallery figcaption{color:var(--muted);font-size:.88rem;padding:8px 2px 0}
+.icons{display:flex;gap:14px;margin-top:18px}.icons img{width:72px;height:72px;border-radius:17px;box-shadow:0 6px 16px rgba(60,20,10,.2)}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;margin-bottom:12px}.faq summary{cursor:pointer;font-weight:600}.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}.faq details p{margin:10px 0 0;color:var(--muted);font-size:.95rem}
+.footer{border-top:1px solid var(--border);padding:28px 24px calc(28px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:.85rem}.footer a{color:var(--muted);margin:0 8px}
+@media(max-width:900px){.night .endings{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:36px;padding-block:48px 44px}.feature,.feature.wide{grid-template-columns:1fr;gap:28px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery{grid-template-columns:1fr}.night{padding:28px 22px}}
+@media(max-width:560px){.wrap{padding-inline:18px}section{padding-block:44px}.cards,.night .endings{grid-template-columns:1fr}.steps li{padding:18px 18px 18px 62px}.steps li::before{left:16px;top:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a class="brand" href="/">AME Mobile Inc.</a><a class="back" href="/#apps">← All apps</a></div></nav>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="app-id"><img src="/images/last-sol/icon.png" alt="" width="64" height="64"/><div><strong>Last Sol: Mars Expedition</strong><span>Land, Explore, Survive, Return</span></div></div>
+      <h1>Every landing <em>changes your story.</em></h1>
+      <p class="lede">It's 2030. Your lander is falling toward Mars, the fuel is low and the pad is small. Fly it down yourself, build a base out of whatever survived, and find a way home before the supplies run out. Or don't go home at all.</p>
+      <span class="badge">Coming soon to the App Store</span>
+      <p class="fine">For iPhone, iPad and Mac. Free, with an optional one-time Plus. No account, no ads, no tracking. Plays offline.</p>
+    </div>
+    <img class="wide-shot" src="/images/last-sol/ipad-base.jpg" width="1400" height="1050" alt="The Mars base on an iPad: the lander, the rocket on its pad, solar arrays, a greenhouse, drones hauling ice, and the robot's next step"/>
+  </div>
+
+  <section aria-labelledby="sol">
+    <div class="feature">
+      <div>
+        <h2 id="sol">One sol at a time</h2>
+        <p class="sub">A sol is a Mars day. Each one, you spend your energy on what matters most.</p>
+        <ol class="steps">
+          <li><h3>Fly the landing</h3><p>Real Mars gravity, a parachute question and three pads to choose from. Hold to burn, nudge with the side jets. How well you land decides your supplies, your rover and your rocket.</p></li>
+          <li><h3>Build the base</h3><p>Solar arrays, habitats, greenhouses, a water extractor, a fuel plant, a reactor and more, placed on a map you walk around, a shift of work at a time.</p></li>
+          <li><h3>Drive and explore</h3><p>Take the rover to the ice crater, the mineral ridge and the silent rover that came before you. Explore on foot for landmarks, clues and things to make.</p></li>
+          <li><h3>Rest, and watch it work</h3><p>At night the buildings do their work: water, food, fuel and science, if the power holds. Then a new sol, and sometimes a new problem.</p></li>
+        </ol>
+      </div>
+      <img class="tall-shot" src="/images/last-sol/iphone-01-landing.jpg" width="506" height="1100" loading="lazy" alt="Flying the landing: altitude and speed readouts, the cockpit window, the side jet buttons, and the target pad below"/>
+    </div>
+  </section>
+
+  <section aria-labelledby="base">
+    <div class="feature wide">
+      <div>
+        <h2 id="base">A base that really works</h2>
+        <p class="sub">Build it, then watch it run.</p>
+        <ul class="points">
+          <li><b>Day and night power:</b> solar by day, batteries and a reactor through the night, when the buildings do their work.</li>
+          <li><b>Build more:</b> up to four of each building, placed anywhere open, with drones hauling ice, food and samples between them.</li>
+          <li><b>Mars fights back:</b> dust storms dim the sun for days and machines break in the cold. Make repair kits and decide what to fix first.</li>
+          <li><b>Items and a recipe book:</b> finds from every drive become rover upgrades, base gadgets and keepsakes.</li>
+          <li><b>A shuttle:</b> build a hangar and fly to the other landing sites.</li>
+        </ul>
+      </div>
+      <img class="wide-shot" src="/images/last-sol/iphone-06-storm.jpg" width="1200" height="552" loading="lazy" alt="A dust storm over the base, with the robot saying the solar array broke down and how to repair it"/>
+    </div>
+  </section>
+
+  <section aria-labelledby="real">
+    <h2 id="real">Real science, a robot at your side</h2>
+    <p class="sub">The game is made up; the science isn't.</p>
+    <div class="cards">
+      <div class="card"><h3>NASA souvenirs</h3><p>Collect 22 real NASA photos of Mars as postcards, each with its credit, from Viking to Perseverance.</p></div>
+      <div class="card"><h3>Mission Decisions</h3><p>Real Mars problems with real answers, from MOXIE making oxygen to dust devils cleaning solar panels, kept in a Science Journal.</p></div>
+      <div class="card"><h3>Earth, at light speed</h3><p>Ask Mission Control a question and wait the real light time for the answer, minutes each way. It arrives as a notification.</p></div>
+      <div class="card"><h3>Your robot</h3><p>Minimus beeps, Frostbyte pings, Digby talks. It explains every building, points to the next step and helps on the build.</p></div>
+      <div class="card"><h3>Mysteries to solve</h3><p>Twelve clues in four mysteries, from an older, wetter Mars to someone who came before you.</p></div>
+      <div class="card"><h3>A daily expedition</h3><p>The same Mars for everyone today, with a twist of the day, on its own Game Center leaderboard.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="endings" class="night">
+    <h2 id="endings">Five endings</h2>
+    <p class="sub">Each has its own scene and its own credits music, and the photos you found roll by in the credits.</p>
+    <ul class="endings">
+      <li><b>Homecoming</b><span>Repair the rocket, fill the tanks, launch for Earth.</span></li>
+      <li><b>First Martian</b><span>Build a home that keeps you alive for good.</span></li>
+      <li class="plus"><b>The Discovery</b><span>Make the find of the century in the lab.</span></li>
+      <li class="plus"><b>The Ancient Gate</b><span>Follow the signal to the end.</span></li>
+      <li><b>Last Transmission</b><span>When the supplies are gone, one last message home.</span></li>
+    </ul>
+    <img class="wide-shot" src="/images/last-sol/mac-credits.jpg" width="1400" height="875" loading="lazy" alt="The ending credits on a Mac: the crew and expedition, and a NASA photo of Mars from the run"/>
+  </section>
+
+  <section aria-labelledby="screens">
+    <h2 id="screens">On every screen</h2>
+    <div class="gallery">
+      <figure><img src="/images/last-sol/iphone-03-drive.jpg" width="1200" height="552" loading="lazy" alt="The rover driving to the ice crater under the stars, Earth in the sky"/><figcaption>A drive to the ice crater, Earth in the sky.</figcaption></figure>
+      <figure><img src="/images/last-sol/iphone-04-explore.jpg" width="1200" height="552" loading="lazy" alt="Exploring the silent rover on foot with the robot"/><figcaption>Exploring the silent rover on foot.</figcaption></figure>
+      <figure><img src="/images/last-sol/iphone-05-items.jpg" width="1200" height="552" loading="lazy" alt="The items panel: an inventory of finds and the recipe book"/><figcaption>Items and the recipe book.</figcaption></figure>
+      <figure><img src="/images/last-sol/iphone-07-souvenir.jpg" width="1200" height="552" loading="lazy" alt="A NASA souvenir postcard: the silent rover seen from orbit, credited"/><figcaption>A NASA souvenir, credited.</figcaption></figure>
+      <figure><img src="/images/last-sol/iphone-08-mars-map.jpg" width="1200" height="552" loading="lazy" alt="The Mars map with the landing sites, roads and shuttle routes"/><figcaption>The Mars map and the shuttle routes.</figcaption></figure>
+      <figure><img src="/images/last-sol/iphone-02-base.jpg" width="1200" height="552" loading="lazy" alt="The base on an iPhone, with the robot explaining the solar array"/><figcaption>Your robot explains every building.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="plus">
+    <h2 id="plus">Free, or Plus?</h2>
+    <p class="sub">The first expedition in Utopia Planitia is free and complete: the landing, the whole base, drives, items, the shuttle, every Mission Decision, three endings and the daily expedition, with no ads. Plus is one purchase, yours for life, with Family Sharing. It never sells supplies or shortcuts.</p>
+    <div class="cards">
+      <div class="card"><span class="tag plus">Plus</span><h3>Four more regions</h3><p>The North Polar Cap, Valles Marineris, the Tharsis lava tubes and the Jezero delta, each with its own rules, events and NASA photos.</p></div>
+      <div class="card"><span class="tag plus">Plus</span><h3>The signal</h3><p>Excavate it, build the alien research lab, and find out what it is. Two more endings.</p></div>
+      <div class="card"><span class="tag plus">Plus</span><h3>Colony mode and more</h3><p>Keep building after an ending as settlers move in, let Minimus fly the landing, Commander mode, rover paints, app icons and astronaut looks.</p></div>
+    </div>
+    <div class="icons"><img src="/images/last-sol/icon.png" width="72" height="72" alt="The Last Sol app icon"/><img src="/images/last-sol/iconpolar.png" width="72" height="72" alt="The Polar app icon"/><img src="/images/last-sol/iconcommander.png" width="72" height="72" alt="The Commander app icon"/></div>
+  </section>
+
+  <section aria-labelledby="faq" class="faq">
+    <h2 id="faq">Questions</h2>
+    <details><summary>Which devices does it run on?</summary><p>iPhone and iPad on iOS 17 or later, including the iPhone Duo, and Mac. Buy Plus once and it unlocks on all of them with the same Apple Account.</p></details>
+    <details><summary>Does it need an internet connection, or an account?</summary><p>Neither. Everything plays offline. Game Center is optional and used only for the leaderboards, and a connection is used only to buy or restore Plus.</p></details>
+    <details><summary>Are the photos real?</summary><p>Yes. The souvenirs are real NASA images, each shown with its credit, such as NASA/JPL-Caltech or NASA/JPL/University of Arizona. NASA does not endorse this game.</p></details>
+    <details><summary>Why does it ask to send notifications?</summary><p>Only to tell you an answer from Earth has arrived, after the real light time between the planets. The notification is scheduled on your device; nothing is sent to us.</p></details>
+    <details><summary>I bought Plus on another device. How do I get it back?</summary><p>Open Plus from the title screen and tap Restore, signed in with the same Apple Account.</p></details>
+    <details><summary>Need help?</summary><p>Email <a href="mailto:info@amemobile.ca?subject=Last%20Sol">info@amemobile.ca</a> with your device model and what happened.</p></details>
+  </section>
+</main>
+<div class="footer"><p><a href="/">AME Mobile</a><a href="/support/">Support</a><a href="/privacy/#last-sol">Privacy Policy</a></p>© 2026 AME Mobile Inc. All rights reserved.</div>
+</body>
+</html>
