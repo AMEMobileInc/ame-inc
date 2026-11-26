@@ -12,7 +12,7 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="AME Mobile Inc."/>
 <meta property="og:title" content="20.20.20 — Look far. Rest your eyes."/>
-<meta property="og:description" content="A gentle reminder and timer for the 20-20-20 eye-care habit, with iPhone and Apple Watch support."/>
+<meta property="og:description" content="A gentle reminder and timer for the 20-20-20 eye-care habit, on iPhone, Apple Watch and Mac."/>
 <meta property="og:url" content="https://amemobile.ca/20-20-20/"/>
 <meta property="og:image" content="https://amemobile.ca/images/20-20-20/header.png"/>
 <meta property="og:image:alt" content="20.20.20 eye looking toward three distant dots"/>
@@ -26,7 +26,7 @@
   "@type": "MobileApplication",
   "name": "20.20.20: Eye Care & Tracker",
   "url": "https://amemobile.ca/20-20-20/",
-  "operatingSystem": "iOS 17 or later, watchOS 11.4 or later",
+  "operatingSystem": "iOS 17 or later, watchOS 11.4 or later, macOS 14 or later",
   "applicationCategory": "HealthApplication",
   "downloadUrl": "https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741",
   "publisher": { "@type": "Organization", "name": "AME Mobile Inc.", "url": "https://amemobile.ca/" }
@@ -62,6 +62,9 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
 .who{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}.who .card h3 span{display:inline-block;font:600 .72rem/1 'Inter',sans-serif;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:5px 9px;margin-left:8px;vertical-align:middle}.who .free span{background:rgba(60,203,187,.18);color:var(--accent)}.who .plus span{background:var(--sun);color:#06243a}
 @media(max-width:860px){.who{grid-template-columns:1fr}}
 @media(max-width:560px){.compare th,.compare td{padding:10px 10px;font-size:.88rem}}
+.mac-shots{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;margin-top:22px}.mac-shots img{border-radius:16px;border:1px solid var(--border)}.mac-shots .stack{display:grid;gap:16px}
+.store-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+@media(max-width:860px){.mac-shots{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -74,7 +77,7 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
       <h1>Look far.<br/>Rest your eyes.</h1>
       <p class="lede">20.20.20 helps you build one simple habit: every 20 minutes, look at something 20 feet away for at least 20 seconds. Gentle reminders and a calm timer make it easier to keep going.</p>
       <a class="btn" href="https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741" target="_blank" rel="noopener">View on the App Store ↗</a>
-      <p class="fine">For iPhone and Apple Watch. Free to start, with optional 20.20.20 Plus.</p>
+      <p class="fine">For iPhone, Apple Watch and, new in 5.2, Mac. Free to start, with optional 20.20.20 Plus: one purchase for all three.</p>
     </div>
     <img class="hero-art" src="/images/20-20-20/header.png" width="3840" height="1646" alt="A stylized eye looking into the distance along three dots beneath the 20.20.20 title"/>
   </div>
@@ -122,6 +125,27 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
       <li><h3>Blink slowly a few times</h3><p>Screen time tends to reduce blinking. A few slow, full blinks during the break help your eyes feel more comfortable.</p></li>
       <li><h3>Not a good moment? Push it, don't skip it</h3><p>On Apple Watch, tap 5 min later. The reminder comes back in five minutes, so the break moves instead of disappearing.</p></li>
     </ol>
+  </section>
+
+  <section aria-labelledby="mac">
+    <h2 id="mac">Now on your Mac<span class="tag">New in 5.2</span></h2>
+    <p class="sub">Most eye strain happens at a computer, so 20.20.20 now lives right there: quietly in your menu bar, with a break that actually happens.</p>
+    <div class="cards">
+      <div class="card"><h3>A countdown in the menu bar</h3><p>An eye and the minutes to your next break, always in view. Take a break now, mute for today, or pause for an hour.</p></div>
+      <div class="card"><h3>A break you can't miss</h3><p>Every display gently dims and a calm ring counts down 20 seconds. Space pauses, Esc skips. Reminders offer Start Now and 5 Minutes Later.</p></div>
+      <div class="card"><h3>Widgets for your desktop</h3><p>The next break, today's count and your streak at a glance, and Trends for Supporters. Open at login, and Plus works with the same purchase.</p></div>
+    </div>
+    <div class="mac-shots">
+      <img src="/images/20-20-20/mac-02-break.jpg" width="1600" height="1000" alt="The Mac break: the screen dims and a ring counts down 20 seconds with the words Look at something 20 feet away" loading="lazy"/>
+      <div class="stack">
+        <img src="/images/20-20-20/mac-03-menu.jpg" width="1600" height="1000" alt="The 20.20.20 menu bar panel showing the next eye break in 8 minutes and a 14-day streak" loading="lazy"/>
+        <img src="/images/20-20-20/mac-01-today.jpg" width="1600" height="1000" alt="The 20.20.20 window on Mac with today's breaks, the next break, and desktop widgets" loading="lazy"/>
+      </div>
+    </div>
+    <div class="store-row">
+      <a class="btn" href="https://apps.apple.com/app/id872763741?platform=mac" target="_blank" rel="noopener">Get it for Mac ↗</a>
+      <p class="fine" style="margin:0">Free on the Mac App Store, for macOS 14 or later. Already have Plus on iPhone? Choose Restore Purchases on the Mac.</p>
+    </div>
   </section>
 
   <section aria-labelledby="watch-break">
@@ -180,11 +204,13 @@ section{padding-block:56px;border-top:1px solid var(--border)}h2{font-size:clamp
 
   <section aria-labelledby="plus">
     <h2 id="plus">Free or Plus?</h2>
-    <p class="sub">The habit itself is free for everyone, on iPhone and Apple Watch. Plus is for people who want to shape it around their day, see how it goes over time, and support a small app.</p>
+    <p class="sub">The habit itself is free for everyone, on iPhone, Apple Watch and Mac, and one Plus purchase covers all three. Plus is for people who want to shape it around their day, see how it goes over time, and support a small app.</p>
     <table class="compare">
       <thead><tr><th scope="col">What you get</th><th scope="col">Free</th><th scope="col" class="plus-col">Plus</th></tr></thead>
       <tbody>
         <tr><th scope="row">20-second breaks with haptics, on iPhone and Apple Watch</th><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">20.20.20 for Mac: menu bar countdown and full-screen breaks</th><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Widgets</th><td>Next Eye Break, on iPhone and Mac</td><td>Also the Trends widget</td></tr>
         <tr><th scope="row">Reminders on your days and hours</th><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Reminder interval</th><td>Every 20 minutes</td><td>20, 30, 40 or 60 minutes</td></tr>
         <tr><th scope="row">Quiet time</th><td>Mute for today, and 5 min later on Apple Watch</td><td>Also pause for 1, 2 or 4 hours</td></tr>
